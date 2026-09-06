@@ -94,9 +94,14 @@ Mantissa-based digit extraction can land just below an exact integer boundary (f
 
 The frozen manuscript is `manuscript/paper.pdf`; its sources are `manuscript/paper.tex` and `manuscript/references4.bib`. The validated build produces a 35-page PDF with identical extracted text and pixel-identical rendered pages. Its byte hash differs because pdfTeX writes the build creation/modification timestamp (and derived internal PDF identifiers); the authoritative PDF is not replaced.
 
-## Citation and identifiers
+## Archival and citation
 
-The public repository is <https://github.com/Radhe-Dhoundiyal/benford-weighted-digit-sums>. Use `CITATION.cff` for software citation metadata. No DOI, Zenodo record, or arXiv identifier is asserted; add those only after the corresponding external records exist and are verified.
+The public repository is <https://github.com/Radhe-Dhoundiyal/benford-weighted-digit-sums>. Use `CITATION.cff` for software citation metadata.
+
+- Version 1.0.0 archive (the exact archived state associated with this paper): <https://doi.org/10.5281/zenodo.22466698>
+- All versions: <https://doi.org/10.5281/zenodo.22466697>
+
+No arXiv identifier is asserted.
 
 ## License
 

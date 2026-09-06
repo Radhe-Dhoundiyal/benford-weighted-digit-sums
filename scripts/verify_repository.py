@@ -19,7 +19,9 @@ VERSION = "1.0.0"
 RELEASE_DATE = "2026-09-05"
 LICENSE_ID = "MIT"
 REPOSITORY_URL = "https://github.com/Radhe-Dhoundiyal/benford-weighted-digit-sums"
-FROZEN_MANUSCRIPT_SHA256 = "411f47cbbac37522edcaefcbe3b55a23f402810607f390e26e3c7d9f1bc92847"
+VERSION_DOI = "10.5281/zenodo.22466698"
+CONCEPT_DOI = "10.5281/zenodo.22466697"
+FROZEN_MANUSCRIPT_SHA256 = "2666a5b38b9880628c301d003b0fcd9fb7a9c4c433bc154ef12701ec77981c60"
 
 
 def require(condition: bool, message: str) -> None:
@@ -49,9 +51,12 @@ def verify_metadata() -> None:
     require(code["license"].endswith("/MIT.html"), "CodeMeta license mismatch")
     require(code.get("codeRepository") == REPOSITORY_URL, "CodeMeta repository URL mismatch")
     require(cff_scalar(cff, "repository-code") == REPOSITORY_URL, "CFF repository URL mismatch")
-    serialized_code = json.dumps(code).lower()
-    require(not any(key in serialized_code for key in ("doi", "zenodo", "arxiv")), "unverified external identifier in CodeMeta")
-    require(not re.search(r"(?im)^(doi|identifiers):", cff), "unverified external identifier in CFF")
+    require(code.get("identifier") == f"https://doi.org/{VERSION_DOI}", "CodeMeta version DOI mismatch")
+    require(code.get("isPartOf", {}).get("identifier") == f"https://doi.org/{CONCEPT_DOI}", "CodeMeta concept DOI mismatch")
+    require("arxiv" not in json.dumps(code).lower(), "unverified arXiv identifier in CodeMeta")
+    require(cff_scalar(cff, "doi") == VERSION_DOI, "CFF version DOI mismatch")
+    require(f"value: {CONCEPT_DOI}" in cff, "CFF concept DOI mismatch")
+    require("arxiv" not in cff.lower(), "unverified arXiv identifier in CFF")
 
 
 def verify_manuscript() -> None:

@@ -1,5 +1,14 @@
 # Changelog
 
+## Post-release metadata - 2026-09-06
+
+This is not a new semantic version. After the v1.0.0 archival release:
+
+- Zenodo assigned version DOI `10.5281/zenodo.22466698`.
+- Zenodo assigned concept/all-versions DOI `10.5281/zenodo.22466697`.
+- Repository citation metadata was synchronized with the assigned identifiers.
+- A reproducibility citation was added to the manuscript on `main`.
+
 ## [1.0.0] - 2026-09-05
 
 Initial public reproducibility release candidate.

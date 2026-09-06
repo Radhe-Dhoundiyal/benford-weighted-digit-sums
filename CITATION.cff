@@ -10,6 +10,11 @@ version: 1.0.0
 date-released: 2026-09-05
 license: MIT
 repository-code: "https://github.com/Radhe-Dhoundiyal/benford-weighted-digit-sums"
+doi: 10.5281/zenodo.22466698
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22466697
+    description: Concept DOI for all versions
 abstract: "Adversarial computational verification package for exact Benford-weighted digit-sum identities and deterministic second-order leading-window asymptotics."
 keywords:
   - Benford law

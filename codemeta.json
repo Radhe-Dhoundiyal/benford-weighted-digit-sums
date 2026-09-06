@@ -13,6 +13,12 @@
   },
   "license": "https://spdx.org/licenses/MIT.html",
   "codeRepository": "https://github.com/Radhe-Dhoundiyal/benford-weighted-digit-sums",
+  "identifier": "https://doi.org/10.5281/zenodo.22466698",
+  "isPartOf": {
+    "@type": "CreativeWork",
+    "name": "Benford-Weighted Digit Sums and Second-Order Asymptotics for Exponential Sequences: all versions",
+    "identifier": "https://doi.org/10.5281/zenodo.22466697"
+  },
   "programmingLanguage": "Python",
   "runtimePlatform": "Python >=3.10",
   "applicationCategory": "Scientific reproducibility software",
