@@ -1,0 +1,20 @@
+{
+  "@context": "https://w3id.org/codemeta/3.0",
+  "@type": "SoftwareSourceCode",
+  "name": "Benford-Weighted Digit Sums and Second-Order Asymptotics for Exponential Sequences",
+  "description": "Adversarial computational verification package for exact Benford-weighted digit-sum identities and deterministic second-order leading-window asymptotics.",
+  "version": "1.0.0",
+  "datePublished": "2026-09-05",
+  "author": {
+    "@type": "Person",
+    "givenName": "Radhe",
+    "familyName": "Dhoundiyal",
+    "affiliation": {"@type": "Organization", "name": "Independent Researcher"}
+  },
+  "license": "https://spdx.org/licenses/MIT.html",
+  "codeRepository": "https://github.com/Radhe-Dhoundiyal/benford-weighted-digit-sums",
+  "programmingLanguage": "Python",
+  "runtimePlatform": "Python >=3.10",
+  "applicationCategory": "Scientific reproducibility software",
+  "keywords": ["Benford law", "digit sums", "discrepancy", "exponential sequences", "reproducibility"]
+}

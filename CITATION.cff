@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this reproducibility software, please cite it using these metadata."
+title: "Benford-Weighted Digit Sums and Second-Order Asymptotics for Exponential Sequences"
+type: software
+authors:
+  - family-names: Dhoundiyal
+    given-names: Radhe
+    affiliation: Independent Researcher
+version: 1.0.0
+date-released: 2026-09-05
+license: MIT
+repository-code: "https://github.com/Radhe-Dhoundiyal/benford-weighted-digit-sums"
+abstract: "Adversarial computational verification package for exact Benford-weighted digit-sum identities and deterministic second-order leading-window asymptotics."
+keywords:
+  - Benford law
+  - digit sums
+  - discrepancy
+  - exponential sequences
+  - reproducibility

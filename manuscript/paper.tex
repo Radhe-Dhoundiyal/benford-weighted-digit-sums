@@ -1,0 +1,3528 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\geometry{margin=1in}
+
+\title{Benford-Weighted Digit Sums and Second-Order Asymptotics for Exponential Sequences}
+\author{Radhe Dhoundiyal \\ \small{Independent Researcher}}
+\date{September 5, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Let \(b\ge2\) be an integer base, and let \(M_L\) denote the
+\(L\)-digit integer significand induced by the logarithmic, or Benford,
+mantissa measure. Starting from the classical prefix law
+\[
+\mathbb P(M_L=m)=\log_b\!\left(\frac{m+1}{m}\right),
+\]
+we derive an exact finite evaluation for the Benford-weighted
+base-\(b\) digit sum \(\mathbb E[s_b(M_L)]\). This yields an exact
+finite formula for the cumulative signed deviation of significant-digit
+expectations from the uniform digit mean and, in the limit,
+\[
+c_b=
+\frac b2-\frac{b-1}{2}\log_b(2\pi).
+\]
+We also obtain a two-term finite-length expansion with an explicit
+Stirling-remainder bound.
+
+We then transfer this constant to deterministic exponential sequences.
+For multiplicatively independent integers \(a,b\ge2\), a finite
+discrepancy estimate shows that the mean sum of the first \(J\)
+significant digits of \(a^n\) equals
+\[
+J\frac{b-1}{2}-c_b
+\]
+up to explicit errors. Combining this with classical quantitative
+discrepancy bounds for \(\{n\log_b a\}\) gives, for a logarithmically
+growing leading window \(J_N\),
+\[
+\mathcal S_{N,J_N}(a;b)
+=
+J_N\frac{b-1}{2}-c_b+o(1).
+\]
+Thus the same cumulative Benford bias appears as a bounded
+second-order correction in a deterministic exponential sequence.
+\end{abstract}
+
+% ============================================================
+% Section 1
+% ============================================================
+
+\section{Introduction and main results}
+\label{sec:introduction}
+
+The significant digits of exponential sequences provide a classical
+meeting point of uniform distribution theory, Benford's law, and digital
+number theory.  If \(b\ge 2\) is an integer base and
+\(\Theta\) is uniformly distributed on \([0,1)\), then the random
+mantissa
+\[
+    X=b^\Theta\in[1,b)
+\]
+induces the logarithmic, or Benford, distribution on significant
+digits.  Equivalently, questions about the significant digits of
+deterministic powers \(a^n\) are naturally related to the rotation
+\[
+    \{n\log_b a\},
+\]
+whenever \(a\) and \(b\) are multiplicatively independent.
+
+The distribution of a fixed significant prefix in the logarithmic
+mantissa model is classical.  In particular, if \(M_L\) denotes the
+integer formed by the first \(L\) significant base-\(b\) digits of
+\(b^\Theta\), then
+\begin{equation}
+    \mathbb P(M_L=m)
+    =
+    \log_b\!\left(\frac{m+1}{m}\right),
+    \qquad
+    b^{L-1}\le m\le b^L-1.
+    \label{eq:classical-prefix-law-intro}
+\end{equation}
+The corresponding marginal laws of individual significant digits,
+their relation to uniform distribution modulo one, and the convergence
+of deeper significant digits toward the uniform digit distribution are
+also well established; see, among others,
+\cite{Newcomb1881,Benford1938,Diaconis1977,Hill1995Phenomenon,
+Hill1995Statistical,BergerHill2011,BergerHill2015}.
+Closed Gamma-function expressions for the individual higher-digit
+marginals were obtained by Balado and Silvestre
+\cite{BaladoSilvestre2021,BaladoSilvestre2024}.  We do not claim
+novelty for these fixed-position distribution laws.
+
+The purpose of this paper is instead to study an aggregate quantity that
+retains the systematic bias of the early significant positions.
+
+Let \(D_j^{(b)}\) denote the \(j\)-th significant base-\(b\) digit
+under the logarithmic mantissa model, and set
+\[
+    \mu_b=\frac{b-1}{2},
+\]
+the mean of a uniformly distributed digit in
+\(\{0,\ldots,b-1\}\).
+For \(L\ge1\), define the finite cumulative signed significant-digit
+bias by
+\begin{equation}
+    c_{b,L}
+    =
+    \sum_{j=1}^{L}
+    \left(
+        \mu_b-\mathbb E[D_j^{(b)}]
+    \right).
+    \label{eq:cbl-definition-intro}
+\end{equation}
+The adjective ``signed'' is important: the quantity need not be
+positive for every base.
+
+Our first main result gives an exact finite evaluation of the
+corresponding Benford-weighted digit sum.  Let \(s_b(m)\) denote the
+ordinary sum of the base-\(b\) digits of the integer \(m\).
+
+\begin{theorem}[Exact Benford-weighted digit sum]
+\label{thm:intro-finite-digit-sum}
+For every integer \(b\ge2\) and every \(L\ge1\),
+\begin{equation}
+\boxed{
+    \mathbb E[s_b(M_L)]
+    =
+    b^L-b+L(b-1)
+    -
+    \log_b
+    \left(
+        \frac{(b^L-1)!}
+        {\bigl((b^{L-1}-1)!\bigr)^b}
+    \right).
+}
+\label{eq:intro-finite-digit-sum}
+\end{equation}
+Equivalently,
+\begin{equation}
+\boxed{
+    c_{b,L}
+    =
+    \frac{
+        \ln\Gamma(b^L)
+        -
+        b\ln\Gamma(b^{L-1})
+    }{\ln b}
+    -
+    (b^L-b)
+    -
+    \frac{L(b-1)}{2}.
+}
+\label{eq:intro-cbl-gamma}
+\end{equation}
+\end{theorem}
+
+The proof uses the classical prefix law
+\eqref{eq:classical-prefix-law-intro} together with the elementary
+base-\(b\) recursion
+\[
+    s_b(bq+r)=s_b(q)+r,
+    \qquad 0\le r\le b-1.
+\]
+Although the probability law in
+\eqref{eq:classical-prefix-law-intro} is classical, we have not found
+the weighted evaluation
+\eqref{eq:intro-finite-digit-sum}, or the equivalent finite cumulative
+identity \eqref{eq:intro-cbl-gamma}, in the literature surveyed.
+
+Passing to the limit produces a simple closed constant.
+
+\begin{theorem}[Cumulative significant-digit bias]
+\label{thm:intro-cb}
+For every integer base \(b\ge2\), the series
+\[
+    c_b
+    =
+    \sum_{j=1}^{\infty}
+    \left(
+        \frac{b-1}{2}
+        -
+        \mathbb E[D_j^{(b)}]
+    \right)
+\]
+converges absolutely and satisfies
+\begin{equation}
+\boxed{
+    c_b
+    =
+    \frac{b}{2}
+    -
+    \frac{b-1}{2}\log_b(2\pi).
+}
+\label{eq:intro-cb}
+\end{equation}
+\end{theorem}
+
+For example, in base \(10\),
+\begin{equation}
+    c_{10}
+    =
+    5-\frac{9}{2}\log_{10}(2\pi)
+    =
+    1.408190592388482\ldots.
+    \label{eq:intro-c10}
+\end{equation}
+Thus the cumulative effect of the biased early significant positions
+is governed by the same \(2\pi\) constant that appears in Stirling's
+formula.
+
+The finite identity also gives precise control of the approach to the
+limit.
+
+\begin{theorem}[Finite-length expansion]
+\label{thm:intro-tail}
+For every \(b\ge2\) and \(L\ge1\),
+\begin{equation}
+\begin{aligned}
+    c_b-c_{b,L}
+    &=
+    \frac{b^2-1}{12\ln b}\,b^{-L}
+    -
+    \frac{b^4-1}{360\ln b}\,b^{-3L}
+    +
+    \varepsilon_{b,L},
+\end{aligned}
+\label{eq:intro-tail-expansion}
+\end{equation}
+where
+\begin{equation}
+\boxed{
+    |\varepsilon_{b,L}|
+    \le
+    \frac{b^6+1}{1260\ln b}\,b^{-5L}.
+}
+\label{eq:intro-tail-remainder}
+\end{equation}
+\end{theorem}
+
+The individual significant-digit distributions admit corresponding
+deep-position expansions.  These are useful below, but are not the
+principal novelty of the paper.  Expanding the known exact
+higher-significant-digit law yields, for \(j\ge2\) and
+\(r\in\{0,\ldots,b-1\}\),
+\begin{equation}
+    \mathbb P(D_j^{(b)}=r)
+    =
+    \frac1b
+    +
+    \frac{(b-1)(b-1-2r)}
+         {2b\ln b}\,b^{-j}
+    +
+    O_b(b^{-2j}),
+    \label{eq:intro-digit-expansion}
+\end{equation}
+and consequently
+\begin{equation}
+    \mathbb E[D_j^{(b)}]
+    =
+    \frac{b-1}{2}
+    -
+    \frac{(b-1)^2(b+1)}
+         {12\ln b}\,b^{-j}
+    +
+    O_b(b^{-2j}).
+    \label{eq:intro-mean-digit-expansion}
+\end{equation}
+These formulas should be viewed as quantitative consequences of the
+known higher-digit distribution rather than as independent distribution
+theorems.
+
+\subsection{From the logarithmic model to exponential sequences}
+\label{subsec:intro-deterministic}
+
+The second aim of the paper is to determine whether the constant
+\(c_b\), obtained in the logarithmic mantissa model, persists in an
+actual deterministic exponential sequence.
+
+Let \(a,b\ge2\) be multiplicatively independent integers and write
+\[
+    \alpha=\log_b a.
+\]
+Then \(\alpha\) is irrational.  For \(n\ge1\), let
+\[
+    L_n=\lfloor n\alpha\rfloor+1
+\]
+be the number of base-\(b\) digits of \(a^n\), and let
+\(D_j^{(b)}(a^n)\) denote its \(j\)-th significant digit.
+
+For \(N,J\ge1\), define the leading-window digit-sum average
+\begin{equation}
+    \mathcal S_{N,J}(a;b)
+    =
+    \frac1N
+    \sum_{\substack{1\le n\le N\\L_n\ge J}}
+    \sum_{j=1}^{J}D_j^{(b)}(a^n).
+    \label{eq:intro-SNJ}
+\end{equation}
+The normalization is by \(N\); powers with fewer than \(J\) digits
+contribute nothing to the sum.
+
+Let \(D_N(\alpha)\) denote the ordinary interval discrepancy of
+\[
+    \{\alpha\},\{2\alpha\},\ldots,\{N\alpha\}.
+\]
+That is,
+\[
+    D_N(\alpha)
+    =
+    \sup_{0\le u<v\le1}
+    \left|
+        \frac1N
+        \#\{1\le n\le N:\{n\alpha\}\in[u,v)\}
+        -(v-u)
+    \right|.
+\]
+
+The digit cylinders associated with the first \(J\) significant
+positions have exponentially increasing combinatorial complexity, but
+ordinary discrepancy still gives an explicit finite transfer estimate.
+
+\begin{theorem}[Finite deterministic transfer]
+\label{thm:intro-deterministic-finite}
+Let \(a,b\ge2\) be multiplicatively independent.  Let
+\[
+    e_J(N)
+    =
+    \#\{1\le n\le N:L_n<J\}.
+\]
+Then
+\begin{equation}
+\boxed{
+\begin{aligned}
+    \left|
+        \mathcal S_{N,J}(a;b)
+        -
+        \left(
+            J\frac{b-1}{2}-c_{b,J}
+        \right)
+    \right|
+    \le{}&
+    \frac{b-1}{2}\,b^J D_N(\alpha)
+    \\
+    &+
+    \frac{(b-1)J\,e_J(N)}{N}.
+\end{aligned}
+}
+\label{eq:intro-finite-transfer}
+\end{equation}
+\end{theorem}
+
+Since
+\[
+    e_J(N)=O_{a,b}(J),
+\]
+Theorem~\ref{thm:intro-deterministic-finite} and
+Theorem~\ref{thm:intro-tail} imply the following second-order
+asymptotic.
+
+\begin{theorem}[Second-order leading-window asymptotic]
+\label{thm:intro-second-order}
+Let \(J=J(N)\) satisfy
+\[
+    J(N)\longrightarrow\infty,
+    \qquad
+    b^{J(N)}D_N(\log_b a)\longrightarrow0,
+    \qquad
+    \frac{J(N)^2}{N}\longrightarrow0.
+\]
+Then
+\begin{equation}
+\boxed{
+    \mathcal S_{N,J(N)}(a;b)
+    =
+    J(N)\frac{b-1}{2}
+    -
+    c_b
+    +
+    o(1).
+}
+\label{eq:intro-second-order}
+\end{equation}
+More quantitatively,
+\begin{equation}
+\begin{aligned}
+    \mathcal S_{N,J}(a;b)
+    =
+    J\frac{b-1}{2}
+    -
+    c_b
+    &+
+    O_b(b^{-J})
+    +
+    O_b\!\left(b^J D_N(\log_b a)\right)
+    \\
+    &+
+    O_{a,b}\!\left(\frac{J^2}{N}\right).
+\end{aligned}
+\label{eq:intro-second-order-quantitative}
+\end{equation}
+\end{theorem}
+
+The point of
+\eqref{eq:intro-second-order} is not the first-order term
+\(J(b-1)/2\): first-order digit and block statistics in growing regions
+of exponential sequences have been studied previously by discrepancy
+and exponential-sum methods, notably by Fuchs
+\cite{Fuchs2002} and the literature cited there.
+The distinction here is that the accumulated nonuniformity of the
+significant positions is retained on the absolute \(O(1)\) scale,
+and its limiting contribution is exactly the same constant \(c_b\)
+that arises in the logarithmic mantissa model.
+
+Classical quantitative discrepancy estimates for
+\(\alpha=\log_b a\), based ultimately on Diophantine estimates for
+linear forms in logarithms, yield a power saving for every fixed
+multiplicatively independent pair \((a,b)\); see
+\cite{Fuchs2002,KissTichy1989I,KissTichy1989II,BakerWustholz,DrmotaTichy}.
+Consequently, one obtains logarithmically growing windows as a direct
+corollary.
+
+\begin{corollary}[Logarithmically growing deterministic window]
+\label{cor:intro-log-window}
+Fix multiplicatively independent integers \(a,b\ge2\).
+Suppose
+\[
+    D_N(\log_b a)\ll_{a,b}N^{-\delta_{a,b}}
+\]
+for some \(\delta_{a,b}>0\), as supplied by the classical quantitative
+discrepancy theory cited above.  For any
+\[
+    0<\kappa<\delta_{a,b},
+    \qquad
+    J_N=\left\lfloor\kappa\log_b N\right\rfloor,
+\]
+one has
+\begin{equation}
+\boxed{
+    \mathcal S_{N,J_N}(a;b)
+    =
+    J_N\frac{b-1}{2}
+    -
+    c_b
+    +
+    o(1).
+}
+\label{eq:intro-log-window}
+\end{equation}
+\end{corollary}
+
+Thus the constant \(c_b\) has two interpretations.  It is first the
+total signed positional bias of the significant digits under the
+logarithmic mantissa measure, and it then reappears as a deterministic
+boundary correction for a growing leading block of the powers \(a^n\).
+
+\subsection{Relation to prior work}
+\label{subsec:intro-prior-work}
+
+The logarithmic law for leading significant digits goes back to
+Newcomb and Benford
+\cite{Newcomb1881,Benford1938}.  The relation between leading-digit
+phenomena and uniform distribution modulo one was developed
+systematically by Diaconis \cite{Diaconis1977}.  Hill's work
+\cite{Hill1995Phenomenon,Hill1995Statistical} and the later treatment
+of Berger and Hill \cite{BergerHill2011,BergerHill2015} provide a
+modern framework for significant-digit distributions and Benford
+measures.  Regularity of deeper significant digits has also been
+studied in considerably greater generality
+\cite{HillSchurger2005}.
+
+Particularly relevant here is the work of Balado and Silvestre
+\cite{BaladoSilvestre2021,BaladoSilvestre2024}, who give an exact
+Gamma-function representation for the marginal distribution of the
+\(j\)-th significant digit of a Benford variable.  That formula is
+prior work and is not claimed here.  The position-wise expansion
+\eqref{eq:intro-digit-expansion} may be obtained by expanding this
+known exact distribution.
+
+The ordinary sum-of-digits function has an extensive literature,
+including the classical work of Trollope and Delange and later
+Mellin-transform approaches
+\cite{Trollope1968,Delange1975,FlajoletEtAl1994}.
+Those results primarily concern counting or summation over integers
+with uniform arithmetic weights.  The finite expectation considered
+in Theorem~\ref{thm:intro-finite-digit-sum} instead weights the
+\(L\)-digit integer significands according to the logarithmic masses
+\[
+    \log_b\frac{m+1}{m}.
+\]
+To the best of our knowledge, the resulting exact factorial identity
+and the closed evaluation \eqref{eq:intro-cb} have not previously been
+recorded.
+
+For deterministic exponential sequences, Fuchs
+\cite{Fuchs2002} established quantitative first-order results for
+digital blocks in growing regions using discrepancy and exponential
+sums, building on earlier work in discrepancy and Diophantine
+approximation.  We therefore do not claim novelty for the use of
+discrepancy, for first-order uniform digit frequencies, or for the
+existence of logarithmically growing controlled windows.  Our
+second-order statement retains the bounded contribution left after
+subtracting the uniform first-order digit mean.  We have not found the
+explicit constant \(-c_b\), or an equivalent evaluation, in the
+earlier exponential-sequence literature surveyed.
+
+Accordingly, the principal contribution of the present paper is the
+chain
+\[
+\boxed{
+\begin{gathered}
+    \text{classical Benford prefix law}
+    \\
+    \Downarrow
+    \\
+    \text{exact Benford-weighted finite digit-sum identity}
+    \\
+    \Downarrow
+    \\
+    c_b=
+    \frac b2-\frac{b-1}{2}\log_b(2\pi)
+    \\
+    \Downarrow
+    \\
+    \text{the same }c_b
+    \text{ as a deterministic second-order correction.}
+\end{gathered}
+}
+\]
+
+\subsection{Scope and organization}
+\label{subsec:intro-organization}
+
+The deterministic results in this paper concern a growing block of
+\emph{leading significant digits}.  They do not establish an
+asymptotic law for the complete base-\(b\) digit sum of \(a^n\), whose
+number of digits is of order \(n\).  In particular, no independence,
+mixing, central limit theorem, or variance law for the complete digit
+sequence is assumed or proved here.
+
+Section~\ref{sec:benford-preliminaries} recalls the logarithmic
+significand model and the classical significant-digit laws needed
+below.  Section~\ref{sec:finite-bias} proves the exact finite
+Benford-weighted digit-sum identity and evaluates the cumulative
+constant \(c_b\).  Section~\ref{sec:quantitative-asymptotics} develops
+the finite-position and finite-length asymptotics.
+Section~\ref{sec:deterministic-transfer} transfers the resulting
+constant to deterministic exponential sequences by discrepancy
+estimates. Section~\ref{sec:verification} records the independent computational
+checks used to audit the formulas,
+Section~\ref{sec:discussion} discusses the limitations of the method
+and several open problems, and
+Section~\ref{sec:conclusion} concludes the paper.
+
+% ============================================================
+% Section 2
+% ============================================================
+
+\section{Benford prefixes and significant digits}
+\label{sec:benford-preliminaries}
+
+This section fixes notation and records the classical significant-digit
+facts used later.  None of the distribution laws in this section are
+claimed as new.  The finite prefix law is standard Benford theory, and
+the Gamma-function form of the higher significant-digit marginals is
+due to Balado and Silvestre
+\cite{BaladoSilvestre2021,BaladoSilvestre2024}.
+
+Throughout, \(b\ge2\) is an integer base and
+\[
+    \Theta\sim\operatorname{Unif}[0,1).
+\]
+We write
+\[
+    X=b^\Theta\in[1,b).
+\]
+Equivalently, \(X\) has density
+\[
+    \frac{1}{x\ln b},
+    \qquad 1\le x<b,
+\]
+with respect to Lebesgue measure.
+
+For \(j\ge1\), let \(D_j^{(b)}\) denote the \(j\)-th significant
+base-\(b\) digit of \(X\).  Thus
+\[
+    D_1^{(b)}\in\{1,\ldots,b-1\},
+\]
+whereas
+\[
+    D_j^{(b)}\in\{0,\ldots,b-1\},
+    \qquad j\ge2.
+\]
+
+It will also be convenient to use the ordinary base-\(b\) digit-sum
+function
+\[
+    s_b(m),
+\]
+defined for nonnegative integers \(m\).
+
+\subsection{Finite integer significands}
+\label{subsec:finite-significands}
+
+For \(L\ge1\), define the \(L\)-digit integer significand
+\begin{equation}
+    M_L
+    =
+    \left\lfloor b^{L-1+\Theta}\right\rfloor.
+    \label{eq:ML-definition}
+\end{equation}
+Then
+\[
+    b^{L-1}\le M_L\le b^L-1,
+\]
+and the base-\(b\) digits of \(M_L\) are precisely
+\[
+    D_1^{(b)},D_2^{(b)},\ldots,D_L^{(b)}.
+\]
+Consequently,
+\begin{equation}
+    s_b(M_L)
+    =
+    \sum_{j=1}^{L}D_j^{(b)}.
+    \label{eq:digit-sum-prefix}
+\end{equation}
+
+The distribution of \(M_L\) is the standard Benford distribution on
+\(L\)-digit integer significands.
+
+\begin{proposition}[Classical Benford prefix law]
+\label{prop:benford-prefix-law}
+For
+\[
+    b^{L-1}\le m\le b^L-1,
+\]
+one has
+\begin{equation}
+    \mathbb P(M_L=m)
+    =
+    \log_b\!\left(\frac{m+1}{m}\right).
+    \label{eq:benford-prefix-law}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By definition,
+\[
+    M_L=m
+\]
+if and only if
+\[
+    m
+    \le
+    b^{L-1+\Theta}
+    <
+    m+1.
+\]
+Taking logarithms gives
+\[
+    \log_b\!\left(\frac{m}{b^{L-1}}\right)
+    \le
+    \Theta
+    <
+    \log_b\!\left(\frac{m+1}{b^{L-1}}\right).
+\]
+Since \(\Theta\) is uniform on \([0,1)\), the probability is the
+length of this interval:
+\[
+    \log_b(m+1)-\log_b m
+    =
+    \log_b\!\left(\frac{m+1}{m}\right).
+\]
+\end{proof}
+
+The proof is included only to establish notation and normalization.
+Equation~\eqref{eq:benford-prefix-law} is classical; see, for example,
+\cite{Diaconis1977,Hill1995Phenomenon,BergerHill2011,BergerHill2015}.
+
+For \(L=1\), Proposition~\ref{prop:benford-prefix-law} yields the
+usual first-digit law
+\begin{equation}
+    \mathbb P(D_1^{(b)}=d)
+    =
+    \log_b\!\left(1+\frac1d\right),
+    \qquad
+    d=1,\ldots,b-1.
+    \label{eq:first-digit-law}
+\end{equation}
+A direct finite summation also gives
+\begin{equation}
+    \mathbb E[D_1^{(b)}]
+    =
+    (b-1)-\log_b((b-1)!).
+    \label{eq:first-digit-expectation}
+\end{equation}
+We record \eqref{eq:first-digit-expectation} for later comparison;
+it is an elementary consequence of the classical leading-digit law.
+
+\subsection{Individual higher significant digits}
+\label{subsec:higher-digit-laws}
+
+Let \(j\ge2\) and
+\[
+    r\in\{0,\ldots,b-1\}.
+\]
+Put
+\begin{equation}
+    M=b^{j-2}.
+    \label{eq:M-j-definition}
+\end{equation}
+
+A \(j\)-digit prefix whose final digit is \(r\) has the form
+\[
+    bq+r,
+\]
+where
+\[
+    M\le q\le bM-1.
+\]
+Summing the classical prefix probabilities therefore gives the
+\(j\)-th digit marginal.
+
+\begin{proposition}[Classical higher-digit marginal]
+\label{prop:higher-digit-marginal}
+For \(j\ge2\),
+\begin{equation}
+\boxed{
+    \mathbb P(D_j^{(b)}=r)
+    =
+    \sum_{q=M}^{bM-1}
+    \log_b
+    \left(
+        \frac{bq+r+1}{bq+r}
+    \right).
+}
+\label{eq:higher-digit-log-sum}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The events
+\[
+    \{M_j=bq+r\},
+    \qquad M\le q\le bM-1,
+\]
+are disjoint and exhaust the possible \(j\)-digit prefixes having
+final digit \(r\).  Applying
+Proposition~\ref{prop:benford-prefix-law} with \(L=j\) and summing the
+corresponding probabilities gives
+\eqref{eq:higher-digit-log-sum}.
+\end{proof}
+
+An equivalent closed form is obtained by converting the finite product
+implicit in \eqref{eq:higher-digit-log-sum} to Gamma functions.
+This representation is prior work of Balado and Silvestre
+\cite{BaladoSilvestre2021,BaladoSilvestre2024}.
+
+\begin{proposition}[Balado--Silvestre Gamma representation]
+\label{prop:balado-silvestre-gamma}
+For \(j\ge2\), \(M=b^{j-2}\), and
+\(r\in\{0,\ldots,b-1\}\),
+\begin{equation}
+\boxed{
+\begin{aligned}
+    \mathbb P(D_j^{(b)}=r)
+    &=
+    \frac{1}{\ln b}
+    \ln
+    \left[
+    \frac{
+        \Gamma\!\left(bM+\frac{r+1}{b}\right)
+        \Gamma\!\left(M+\frac{r}{b}\right)
+    }{
+        \Gamma\!\left(bM+\frac{r}{b}\right)
+        \Gamma\!\left(M+\frac{r+1}{b}\right)
+    }
+    \right].
+\end{aligned}
+}
+\label{eq:higher-digit-gamma}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+From \eqref{eq:higher-digit-log-sum},
+\[
+\begin{aligned}
+    \mathbb P(D_j^{(b)}=r)
+    &=
+    \frac{1}{\ln b}
+    \ln
+    \prod_{q=M}^{bM-1}
+    \frac{q+(r+1)/b}{q+r/b}.
+\end{aligned}
+\]
+Using
+\[
+    \prod_{q=M}^{bM-1}(q+\lambda)
+    =
+    \frac{\Gamma(bM+\lambda)}
+         {\Gamma(M+\lambda)}
+\]
+gives \eqref{eq:higher-digit-gamma}.
+\end{proof}
+
+\begin{remark}[Attribution]
+\label{rem:gamma-attribution}
+The derivation above is included for completeness and to fix the
+present notation.  The Gamma representation
+\eqref{eq:higher-digit-gamma} is not a contribution of this paper.
+Balado and Silvestre gave this form in their 2021 conference paper and
+in their later general treatment of number-representation elements
+\cite{BaladoSilvestre2021,BaladoSilvestre2024}.
+\end{remark}
+
+The probabilities in
+\eqref{eq:higher-digit-log-sum} satisfy
+\[
+    \sum_{r=0}^{b-1}
+    \mathbb P(D_j^{(b)}=r)
+    =
+    1.
+\]
+Moreover,
+\[
+    \mathbb P(D_j^{(b)}=r)
+    \longrightarrow
+    \frac1b
+    \qquad
+    (j\to\infty),
+\]
+a classical manifestation of the asymptotic regularity of deeper
+significant digits
+\cite{Hill1995Phenomenon,HillSchurger2005,
+BaladoSilvestre2024}.
+A quantitative first correction to this limit will be recorded in
+Section~\ref{sec:quantitative-asymptotics}, where it is used as
+supporting information rather than as a principal novelty claim.
+
+\subsection{From position-wise laws to a finite digit sum}
+\label{subsec:position-to-sum}
+
+By \eqref{eq:digit-sum-prefix} and linearity of expectation,
+\begin{equation}
+    \mathbb E[s_b(M_L)]
+    =
+    \sum_{j=1}^{L}\mathbb E[D_j^{(b)}].
+    \label{eq:expectation-sum-positions}
+\end{equation}
+Thus one could, in principle, study the cumulative effect of the
+nonuniform significant positions by summing the individual marginal
+expectations.
+
+For the main results, however, it is more effective to work directly
+with the finite random integer \(M_L\).  Combining
+Proposition~\ref{prop:benford-prefix-law} with
+\eqref{eq:digit-sum-prefix} gives
+\begin{equation}
+    \mathbb E[s_b(M_L)]
+    =
+    \sum_{m=b^{L-1}}^{b^L-1}
+    s_b(m)
+    \log_b\!\left(\frac{m+1}{m}\right).
+    \label{eq:weighted-digit-sum-start}
+\end{equation}
+
+Equation~\eqref{eq:weighted-digit-sum-start} is the starting point of
+the exact finite evaluation in the next section.  The probability
+weights are classical; the issue is whether the logarithmically
+weighted digital sum itself admits a useful closed form.
+Section~\ref{sec:finite-bias} shows that it does.
+
+% ============================================================
+% Section 3
+% ============================================================
+
+\section{Exact Benford-weighted digit sums and cumulative bias}
+\label{sec:finite-bias}
+
+We now evaluate the logarithmically weighted digit sum introduced in
+\eqref{eq:weighted-digit-sum-start}.  The input distribution is the
+classical Benford prefix law; the new ingredient is that the weighted
+sum collapses to a finite factorial expression.
+
+For convenience, write
+\begin{equation}
+    E_{b,L}
+    =
+    \mathbb E[s_b(M_L)].
+    \label{eq:E-bL-definition}
+\end{equation}
+By Proposition~\ref{prop:benford-prefix-law},
+\begin{equation}
+    E_{b,L}
+    =
+    \sum_{m=b^{L-1}}^{b^L-1}
+    s_b(m)
+    \log_b\!\left(\frac{m+1}{m}\right).
+    \label{eq:E-bL-raw}
+\end{equation}
+
+The elementary identity
+\begin{equation}
+    s_b(bq+r)=s_b(q)+r,
+    \qquad
+    0\le r\le b-1,
+    \label{eq:digit-sum-recursion}
+\end{equation}
+allows the sum to be reduced recursively.
+
+\subsection{A finite block identity}
+\label{subsec:finite-block-identity}
+
+We first isolate the contribution of the final base-\(b\) digit.
+
+\begin{lemma}
+\label{lem:last-digit-block}
+Let \(L\ge2\), and put
+\[
+    A=b^{L-2},
+    \qquad
+    B=b^{L-1}=bA.
+\]
+Then
+\begin{equation}
+    E_{b,L}
+    =
+    E_{b,L-1}
+    +
+    R_{b,L},
+    \label{eq:E-recursion}
+\end{equation}
+where
+\begin{equation}
+\boxed{
+    R_{b,L}
+    =
+    (b-1)(B+1)
+    -
+    \log_b
+    \left(
+        \frac{
+            (bB-1)!\,(A-1)!^b
+        }{
+            (B-1)!^{\,b+1}
+        }
+    \right).
+}
+\label{eq:R-bL-closed}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Every integer
+\[
+    m\in[B,bB-1]
+\]
+can be written uniquely as
+\[
+    m=bq+r,
+\]
+with
+\[
+    A\le q\le B-1,
+    \qquad
+    0\le r\le b-1.
+\]
+Using \eqref{eq:digit-sum-recursion} in
+\eqref{eq:E-bL-raw} gives
+\begin{align}
+    E_{b,L}
+    &=
+    \sum_{q=A}^{B-1}
+    \sum_{r=0}^{b-1}
+    \bigl(s_b(q)+r\bigr)
+    \log_b
+    \left(
+        \frac{bq+r+1}{bq+r}
+    \right)
+    \notag\\
+    &=
+    \sum_{q=A}^{B-1}
+    s_b(q)
+    \sum_{r=0}^{b-1}
+    \log_b
+    \left(
+        \frac{bq+r+1}{bq+r}
+    \right)
+    +
+    R_{b,L},
+    \label{eq:block-split}
+\end{align}
+where
+\begin{equation}
+    R_{b,L}
+    =
+    \sum_{q=A}^{B-1}
+    \sum_{r=0}^{b-1}
+    r
+    \log_b
+    \left(
+        \frac{bq+r+1}{bq+r}
+    \right).
+    \label{eq:R-bL-definition}
+\end{equation}
+
+The inner logarithmic sum in the first term telescopes:
+\[
+    \sum_{r=0}^{b-1}
+    \log_b
+    \left(
+        \frac{bq+r+1}{bq+r}
+    \right)
+    =
+    \log_b
+    \left(
+        \frac{q+1}{q}
+    \right).
+\]
+Hence the first term in \eqref{eq:block-split} is precisely
+\[
+    E_{b,L-1}.
+\]
+
+It remains to evaluate \(R_{b,L}\).
+For fixed \(q\), discrete summation by parts gives
+\begin{align}
+    &\sum_{r=0}^{b-1}
+    r
+    \log_b
+    \left(
+        \frac{bq+r+1}{bq+r}
+    \right)
+    \notag\\
+    &\qquad=
+    \log_b
+    \left(
+        \frac{
+            (bq+b)^{b-1}
+        }{
+            \prod_{r=1}^{b-1}(bq+r)
+        }
+    \right).
+    \label{eq:fixed-q-last-digit}
+\end{align}
+
+Multiplying \eqref{eq:fixed-q-last-digit} over
+\(A\le q\le B-1\) yields
+\begin{equation}
+    R_{b,L}
+    =
+    \log_b
+    \left[
+        \frac{
+            \displaystyle
+            \prod_{q=A}^{B-1}
+            (b(q+1))^{b-1}
+        }{
+            \displaystyle
+            \prod_{q=A}^{B-1}
+            \prod_{r=1}^{b-1}(bq+r)
+        }
+    \right].
+    \label{eq:R-product}
+\end{equation}
+
+The numerator is
+\begin{equation}
+    b^{(b-1)(B-A)}
+    \left(
+        \frac{B!}{A!}
+    \right)^{b-1}.
+    \label{eq:R-numerator}
+\end{equation}
+The denominator consists of all integers from \(B+1\) to \(bB-1\)
+that are not divisible by \(b\).  Therefore
+\begin{align}
+    \prod_{q=A}^{B-1}
+    \prod_{r=1}^{b-1}(bq+r)
+    &=
+    \frac{
+        (bB-1)!/B!
+    }{
+        \displaystyle
+        \prod_{k=A+1}^{B-1}bk
+    }
+    \notag\\
+    &=
+    \frac{
+        (bB-1)!\,A!
+    }{
+        B!\,
+        b^{B-A-1}
+        (B-1)!
+    }.
+    \label{eq:R-denominator}
+\end{align}
+
+Substituting
+\eqref{eq:R-numerator} and
+\eqref{eq:R-denominator} into
+\eqref{eq:R-product}, and using
+\[
+    B=bA,
+\]
+one obtains
+\begin{equation}
+    \frac{
+        \displaystyle
+        \prod_{q=A}^{B-1}
+        (b(q+1))^{b-1}
+    }{
+        \displaystyle
+        \prod_{q=A}^{B-1}
+        \prod_{r=1}^{b-1}(bq+r)
+    }
+    =
+    b^{(b-1)(B+1)}
+    \frac{
+        (B-1)!^{\,b+1}
+    }{
+        (A-1)!^b\,(bB-1)!
+    }.
+    \label{eq:R-product-simplified}
+\end{equation}
+Taking \(\log_b\) gives
+\eqref{eq:R-bL-closed}.
+\end{proof}
+
+
+\subsection{Exact finite Benford-weighted digit sum}
+\label{subsec:exact-finite-digit-sum}
+
+We can now prove the first main theorem stated in the introduction.
+
+\begin{proof}[Proof of Theorem~\ref{thm:intro-finite-digit-sum}]
+We argue by induction on \(L\).
+
+For \(L=1\),
+\[
+    M_1=D_1^{(b)},
+\]
+and hence
+\begin{align}
+    E_{b,1}
+    &=
+    \sum_{d=1}^{b-1}
+    d\log_b\!\left(\frac{d+1}{d}\right)
+    \notag\\
+    &=
+    (b-1)-\log_b((b-1)!).
+    \label{eq:E-base-case}
+\end{align}
+This agrees with
+\eqref{eq:intro-finite-digit-sum}, since \(0!=1\).
+
+Now suppose \(L\ge2\) and that
+\begin{equation}
+    E_{b,L-1}
+    =
+    b^{L-1}-b+(L-1)(b-1)
+    -
+    \log_b
+    \left(
+        \frac{
+            (b^{L-1}-1)!
+        }{
+            ((b^{L-2}-1)!)^b
+        }
+    \right).
+    \label{eq:E-induction-hypothesis}
+\end{equation}
+Again put
+\[
+    A=b^{L-2},
+    \qquad
+    B=b^{L-1}.
+\]
+By Lemma~\ref{lem:last-digit-block},
+\begin{align}
+    E_{b,L}
+    &=
+    E_{b,L-1}
+    +
+    (b-1)(B+1)
+    \notag\\
+    &\qquad
+    -
+    \log_b
+    \left(
+        \frac{
+            (bB-1)!\,(A-1)!^b
+        }{
+            (B-1)!^{\,b+1}
+        }
+    \right).
+    \label{eq:E-induction-step-start}
+\end{align}
+
+The elementary terms satisfy
+\[
+    B-b+(L-1)(b-1)+(b-1)(B+1)
+    =
+    bB-b+L(b-1).
+\]
+Since \(bB=b^L\), this is
+\[
+    b^L-b+L(b-1).
+\]
+
+The logarithmic terms combine as
+\begin{align}
+    &
+    \frac{(B-1)!}{(A-1)!^b}
+    \cdot
+    \frac{(bB-1)!\,(A-1)!^b}
+         {(B-1)!^{\,b+1}}
+    \notag\\
+    &\qquad=
+    \frac{(bB-1)!}{(B-1)!^b}
+    =
+    \frac{
+        (b^L-1)!
+    }{
+        ((b^{L-1}-1)!)^b
+    }.
+    \label{eq:E-log-combination}
+\end{align}
+Therefore
+\[
+\boxed{
+    E_{b,L}
+    =
+    b^L-b+L(b-1)
+    -
+    \log_b
+    \left(
+        \frac{
+            (b^L-1)!
+        }{
+            ((b^{L-1}-1)!)^b
+        }
+    \right),
+}
+\]
+which completes the induction.
+\end{proof}
+
+\begin{remark}
+\label{rem:finite-identity-novelty}
+The probability measure used in
+Theorem~\ref{thm:intro-finite-digit-sum} is not new:
+\[
+    \mathbb P(M_L=m)
+    =
+    \log_b\!\left(\frac{m+1}{m}\right)
+\]
+is the classical Benford law for the \(L\)-digit integer significand.
+The content of the theorem is the exact evaluation obtained after
+inserting the digital statistic \(s_b(m)\) into this logarithmically
+weighted measure.
+\end{remark}
+
+
+\subsection{Finite cumulative significant-digit bias}
+\label{subsec:finite-cumulative-bias}
+
+Recall that
+\[
+    \mu_b=\frac{b-1}{2}
+\]
+and
+\[
+    c_{b,L}
+    =
+    \sum_{j=1}^{L}
+    \left(
+        \mu_b-\mathbb E[D_j^{(b)}]
+    \right).
+\]
+Since
+\[
+    s_b(M_L)
+    =
+    \sum_{j=1}^{L}D_j^{(b)},
+\]
+linearity of expectation gives
+\begin{equation}
+    c_{b,L}
+    =
+    L\frac{b-1}{2}
+    -
+    E_{b,L}.
+    \label{eq:cbl-from-E}
+\end{equation}
+
+Substituting
+Theorem~\ref{thm:intro-finite-digit-sum} into
+\eqref{eq:cbl-from-E} gives
+\begin{align}
+    c_{b,L}
+    &=
+    \log_b
+    \left(
+        \frac{
+            (b^L-1)!
+        }{
+            ((b^{L-1}-1)!)^b
+        }
+    \right)
+    -
+    (b^L-b)
+    -
+    \frac{L(b-1)}{2}.
+    \label{eq:cbl-factorial}
+\end{align}
+Using
+\[
+    n!=\Gamma(n+1)
+\]
+yields the equivalent Gamma representation
+\begin{equation}
+\boxed{
+    c_{b,L}
+    =
+    \frac{
+        \ln\Gamma(b^L)
+        -
+        b\ln\Gamma(b^{L-1})
+    }{\ln b}
+    -
+    (b^L-b)
+    -
+    \frac{L(b-1)}{2}.
+}
+\label{eq:cbl-gamma-main}
+\end{equation}
+
+Thus the cumulative effect of the first \(L\) significant positions
+has an exact finite form even though the individual digit
+distributions are not uniform.
+
+
+\subsection{The limiting bias constant}
+\label{subsec:limiting-bias}
+
+We next evaluate the limit of
+\eqref{eq:cbl-gamma-main}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:intro-cb}]
+Set
+\[
+    x=b^{L-1},
+\]
+so that
+\[
+    b^L=bx.
+\]
+The classical Stirling expansion gives
+\begin{equation}
+    \ln\Gamma(x)
+    =
+    \left(x-\frac12\right)\ln x
+    -
+    x
+    +
+    \frac12\ln(2\pi)
+    +
+    O(x^{-1})
+    \qquad
+    (x\to\infty).
+    \label{eq:stirling-leading}
+\end{equation}
+
+Applying \eqref{eq:stirling-leading} at \(x\) and \(bx\) gives
+\begin{align}
+    \ln\Gamma(bx)-b\ln\Gamma(x)
+    &=
+    \left(bx-\frac12\right)\ln b
+    +
+    \frac{b-1}{2}\ln x
+    \notag\\
+    &\qquad
+    -
+    \frac{b-1}{2}\ln(2\pi)
+    +
+    O(x^{-1}).
+    \label{eq:gamma-difference-stirling}
+\end{align}
+Since
+\[
+    \ln x=(L-1)\ln b,
+\]
+division by \(\ln b\) yields
+\begin{align}
+    \frac{
+        \ln\Gamma(b^L)
+        -
+        b\ln\Gamma(b^{L-1})
+    }{\ln b}
+    &=
+    b^L
+    -
+    \frac{b}{2}
+    +
+    \frac{L(b-1)}{2}
+    \notag\\
+    &\qquad
+    -
+    \frac{b-1}{2}\log_b(2\pi)
+    +
+    O_b(b^{-L}).
+    \label{eq:gamma-difference-final}
+\end{align}
+
+Substituting this into
+\eqref{eq:cbl-gamma-main}, all terms depending linearly on
+\(b^L\) and \(L\) cancel.  We obtain
+\begin{equation}
+    c_{b,L}
+    =
+    \frac{b}{2}
+    -
+    \frac{b-1}{2}\log_b(2\pi)
+    +
+    O_b(b^{-L}).
+    \label{eq:cbl-leading-limit}
+\end{equation}
+Therefore
+\begin{equation}
+\boxed{
+    c_b
+    =
+    \lim_{L\to\infty}c_{b,L}
+    =
+    \frac{b}{2}
+    -
+    \frac{b-1}{2}\log_b(2\pi).
+}
+\label{eq:cb-main}
+\end{equation}
+
+The absolute convergence of
+\[
+    \sum_{j\ge1}
+    \left(
+        \frac{b-1}{2}
+        -
+        \mathbb E[D_j^{(b)}]
+    \right)
+\]
+follows from the quantitative higher-position estimate proved in
+Section~\ref{sec:quantitative-asymptotics}.
+\end{proof}
+
+\begin{remark}[Signed nature of the bias]
+\label{rem:signed-bias}
+The term ``bias'' in this paper is signed.
+For example,
+\[
+    c_2<0,
+    \qquad
+    c_3<0,
+\]
+whereas
+\[
+    c_{10}
+    =
+    5-\frac92\log_{10}(2\pi)
+    =
+    1.408190592388482\ldots.
+\]
+Thus it would be misleading to call \(c_b\) a universal
+``digit deficit'' across all bases.
+\end{remark}
+
+
+\subsection{Expected average of a finite significant prefix}
+\label{subsec:model-average}
+
+Define
+\begin{equation}
+    A_L^{(b)}
+    =
+    \frac1L
+    \sum_{j=1}^{L}D_j^{(b)}
+    =
+    \frac{s_b(M_L)}{L}.
+    \label{eq:A-L-base-b}
+\end{equation}
+Then the definition of \(c_{b,L}\) gives the exact identity
+\begin{equation}
+\boxed{
+    \mathbb E[A_L^{(b)}]
+    =
+    \frac{b-1}{2}
+    -
+    \frac{c_{b,L}}{L}.
+}
+\label{eq:model-average-exact}
+\end{equation}
+Consequently,
+\begin{equation}
+    \mathbb E[A_L^{(b)}]
+    =
+    \frac{b-1}{2}
+    -
+    \frac{c_b}{L}
+    +
+    O_b\!\left(\frac{b^{-L}}{L}\right),
+    \label{eq:model-average-leading}
+\end{equation}
+with the sharper expansion and explicit remainder given in
+Section~\ref{sec:quantitative-asymptotics}.
+
+Equation~\eqref{eq:model-average-leading} provides the first
+interpretation of \(c_b\): it is the finite boundary correction left
+by the nonuniform early significant positions after the bulk digit
+mean has approached the uniform value \((b-1)/2\).
+In Section~\ref{sec:deterministic-transfer}, we show that the same
+constant survives when the logarithmic mantissa measure is replaced
+by a quantitative orbit average along the deterministic sequence
+\(a^n\).
+
+% ============================================================
+% Section 4
+% ============================================================
+
+\section{Quantitative finite-position and finite-length asymptotics}
+\label{sec:quantitative-asymptotics}
+
+The preceding section evaluated the cumulative significant-digit bias
+exactly.  We now record two quantitative consequences.
+
+First, the known exact distribution of an individual higher significant
+digit admits a simple first-order expansion about the uniform digit law.
+Second, the exact finite formula for \(c_{b,L}\) yields a two-term
+asymptotic expansion with an explicit Stirling-remainder bound.
+
+The first result is included primarily as quantitative background for
+the cumulative theory.  It should not be interpreted as a new
+significant-digit distribution theorem: the exact marginal law and its
+Gamma representation are prior work, as discussed in
+Section~\ref{subsec:higher-digit-laws}.
+
+\subsection{Asymptotics of an individual significant digit}
+\label{subsec:individual-digit-asymptotics}
+
+Let \(j\ge2\), and write
+\[
+    M=b^{j-2}.
+\]
+For
+\[
+    r\in\{0,\ldots,b-1\},
+\]
+Proposition~\ref{prop:balado-silvestre-gamma} gives
+\begin{equation}
+    \mathbb P(D_j^{(b)}=r)
+    =
+    \frac{1}{\ln b}
+    \left[
+        \Delta(bM)-\Delta(M)
+    \right],
+    \label{eq:digit-pmf-delta}
+\end{equation}
+where
+\[
+    \Delta(z)
+    =
+    \ln\Gamma(z+u)-\ln\Gamma(z+v),
+\]
+with
+\[
+    u=\frac{r+1}{b},
+    \qquad
+    v=\frac{r}{b}.
+\]
+
+We use the standard fixed-parameter Gamma-ratio expansion
+\cite[\S5.11(iii)]{DLMFStirling}
+\begin{equation}
+    \ln\Gamma(z+u)-\ln\Gamma(z+v)
+    =
+    (u-v)\ln z
+    +
+    \frac{(u-v)(u+v-1)}{2z}
+    +
+    O_{u,v}(z^{-2})
+    \label{eq:loggamma-ratio-first-order}
+\end{equation}
+as \(z\to\infty\).
+Since \(b\) is fixed and \(r\) ranges over only finitely many values,
+the remainder may be taken uniformly in
+\(r\in\{0,\ldots,b-1\}\), with a constant depending only on \(b\).
+
+\begin{proposition}[Deep-position expansion]
+\label{prop:deep-position-expansion}
+For fixed \(b\ge2\), uniformly in
+\(r\in\{0,\ldots,b-1\}\),
+\begin{equation}
+\boxed{
+    \mathbb P(D_j^{(b)}=r)
+    =
+    \frac1b
+    +
+    \frac{(b-1)(b-1-2r)}
+         {2b\ln b}\,b^{-j}
+    +
+    O_b(b^{-2j})
+}
+\label{eq:deep-position-expansion}
+\end{equation}
+as \(j\to\infty\).
+\end{proposition}
+
+\begin{proof}
+From
+\[
+    u-v=\frac1b
+\]
+and
+\[
+    u+v-1
+    =
+    \frac{2r+1-b}{b},
+\]
+equation~\eqref{eq:loggamma-ratio-first-order} gives
+\begin{equation}
+    \Delta(z)
+    =
+    \frac1b\ln z
+    +
+    \frac{2r+1-b}{2b^2z}
+    +
+    O_b(z^{-2}).
+    \label{eq:delta-expansion}
+\end{equation}
+Applying this at \(z=bM\) and \(z=M\), we obtain
+\begin{align}
+    \Delta(bM)-\Delta(M)
+    &=
+    \frac1b\ln b
+    \notag\\
+    &\quad+
+    \frac{2r+1-b}{2b^2}
+    \left(
+        \frac1{bM}-\frac1M
+    \right)
+    +
+    O_b(M^{-2}).
+    \label{eq:delta-difference}
+\end{align}
+Since
+\[
+    \frac1{bM}-\frac1M
+    =
+    -\frac{b-1}{bM},
+\]
+the correction term becomes
+\[
+    \frac{(b-1)(b-1-2r)}
+         {2b^3M}.
+\]
+Using
+\[
+    M=b^{j-2},
+    \qquad
+    \frac{1}{b^3M}
+    =
+    \frac{1}{b}\,b^{-j},
+\]
+and dividing by \(\ln b\) in
+\eqref{eq:digit-pmf-delta} yields
+\eqref{eq:deep-position-expansion}.
+Finally,
+\[
+    M^{-2}=b^{-2j+4}=O_b(b^{-2j}),
+\]
+which gives the stated remainder.
+\end{proof}
+
+\begin{remark}[Relation to prior work]
+\label{rem:deep-position-prior-work}
+The convergence
+\[
+    \mathbb P(D_j^{(b)}=r)\longrightarrow\frac1b
+\]
+is classical, and the exact Gamma representation from which
+Proposition~\ref{prop:deep-position-expansion} is derived is due to
+Balado and Silvestre
+\cite{BaladoSilvestre2021,BaladoSilvestre2024}.
+Thus
+\eqref{eq:deep-position-expansion} is best viewed as an explicit
+first correction obtained by expanding a known exact formula.
+\end{remark}
+
+
+\subsection{Expectation of a deep significant digit}
+\label{subsec:mean-digit-asymptotics}
+
+Summing the preceding expansion against the digit value gives the
+corresponding mean.
+
+\begin{corollary}
+\label{cor:mean-digit-expansion}
+For fixed \(b\ge2\),
+\begin{equation}
+\boxed{
+    \mathbb E[D_j^{(b)}]
+    =
+    \frac{b-1}{2}
+    -
+    \frac{(b-1)^2(b+1)}
+         {12\ln b}\,b^{-j}
+    +
+    O_b(b^{-2j})
+}
+\label{eq:mean-digit-expansion}
+\end{equation}
+as \(j\to\infty\).
+\end{corollary}
+
+\begin{proof}
+By definition,
+\[
+    \mathbb E[D_j^{(b)}]
+    =
+    \sum_{r=0}^{b-1}
+    r\,\mathbb P(D_j^{(b)}=r).
+\]
+The uniform term contributes
+\[
+    \frac1b
+    \sum_{r=0}^{b-1}r
+    =
+    \frac{b-1}{2}.
+\]
+For the first correction, use
+\begin{align}
+    \sum_{r=0}^{b-1}
+    r(b-1-2r)
+    &=
+    (b-1)\sum_{r=0}^{b-1}r
+    -
+    2\sum_{r=0}^{b-1}r^2
+    \notag\\
+    &=
+    -\frac{b(b-1)(b+1)}{6}.
+    \label{eq:r-correction-sum}
+\end{align}
+Multiplying by the coefficient
+\[
+    \frac{b-1}{2b\ln b}\,b^{-j}
+\]
+from
+\eqref{eq:deep-position-expansion}
+gives
+\[
+    -
+    \frac{(b-1)^2(b+1)}
+         {12\ln b}\,b^{-j}.
+\]
+The finite sum over \(r\) preserves the
+\(O_b(b^{-2j})\) remainder.
+\end{proof}
+
+In particular,
+\begin{equation}
+    \frac{b-1}{2}
+    -
+    \mathbb E[D_j^{(b)}]
+    =
+    O_b(b^{-j}),
+    \label{eq:bias-geometric-decay}
+\end{equation}
+and therefore
+\[
+    \sum_{j=1}^{\infty}
+    \left|
+        \frac{b-1}{2}
+        -
+        \mathbb E[D_j^{(b)}]
+    \right|
+    <
+    \infty.
+\]
+This completes the absolute-convergence assertion in
+Theorem~\ref{thm:intro-cb}.
+
+
+\subsection{A two-term expansion for the cumulative tail}
+\label{subsec:cumulative-tail-expansion}
+
+We now return to the finite cumulative bias.
+The exact formula
+\eqref{eq:cbl-gamma-main} permits substantially sharper information
+than the estimate
+\[
+    c_{b,L}=c_b+O_b(b^{-L})
+\]
+used in Section~\ref{subsec:limiting-bias}.
+
+For \(x>0\), write Stirling's expansion in the form
+\begin{equation}
+\begin{aligned}
+    \ln\Gamma(x)
+    &=
+    \left(x-\frac12\right)\ln x
+    -
+    x
+    +
+    \frac12\ln(2\pi)
+    \\
+    &\quad+
+    \frac{1}{12x}
+    -
+    \frac{1}{360x^3}
+    +
+    \rho(x).
+\end{aligned}
+\label{eq:stirling-two-term}
+\end{equation}
+For positive real \(x\), the standard first-neglected-term remainder
+bound for Stirling's series gives
+\begin{equation}
+    0<\rho(x)
+    \le
+    \frac{1}{1260x^5}.
+    \label{eq:stirling-rho-bound}
+\end{equation}
+We use the positive-real remainder theorem in
+\cite[\S5.11(i)--(ii)]{DLMFStirling}.
+
+Define
+\begin{equation}
+    R(x)
+    =
+    \frac{1}{12x}
+    -
+    \frac{1}{360x^3}
+    +
+    \rho(x).
+    \label{eq:R-stirling}
+\end{equation}
+
+\begin{proof}[Proof of Theorem~\ref{thm:intro-tail}]
+Put
+\[
+    x=b^{L-1}.
+\]
+Then
+\[
+    bx=b^L.
+\]
+Substituting the Stirling expansion
+\eqref{eq:stirling-two-term}
+into the exact formula
+\eqref{eq:cbl-gamma-main}, and subtracting from the limiting value
+\eqref{eq:cb-main}, the elementary terms cancel exactly and give
+\begin{equation}
+    c_b-c_{b,L}
+    =
+    \frac{bR(x)-R(bx)}{\ln b}.
+    \label{eq:tail-R-identity}
+\end{equation}
+Using
+\eqref{eq:R-stirling},
+\begin{align}
+    bR(x)-R(bx)
+    &=
+    \frac{b-b^{-1}}{12x}
+    -
+    \frac{b-b^{-3}}{360x^3}
+    \notag\\
+    &\quad+
+    b\rho(x)-\rho(bx).
+    \label{eq:bR-minus-R}
+\end{align}
+
+Since
+\[
+    x=b^{L-1},
+\]
+we have
+\begin{equation}
+    \frac{b-b^{-1}}{x}
+    =
+    (b^2-1)b^{-L}
+    \label{eq:first-tail-conversion}
+\end{equation}
+and
+\begin{equation}
+    \frac{b-b^{-3}}{x^3}
+    =
+    (b^4-1)b^{-3L}.
+    \label{eq:second-tail-conversion}
+\end{equation}
+Thus
+\eqref{eq:tail-R-identity}
+becomes
+\eqref{eq:intro-tail-expansion}, with
+\begin{equation}
+    \varepsilon_{b,L}
+    =
+    \frac{
+        b\rho(x)-\rho(bx)
+    }{\ln b}.
+    \label{eq:epsilon-definition}
+\end{equation}
+
+Because \(b\ge2\), one has \(\ln b>0\).
+Using
+\eqref{eq:stirling-rho-bound} and the triangle inequality,
+\begin{align}
+    |\varepsilon_{b,L}|
+    &\le
+    \frac{
+        b\rho(x)+\rho(bx)
+    }{\ln b}
+    \notag\\
+    &\le
+    \frac{1}{1260\ln b}
+    \left(
+        \frac{b}{x^5}
+        +
+        \frac{1}{b^5x^5}
+    \right).
+    \label{eq:epsilon-bound-intermediate}
+\end{align}
+Finally,
+\[
+    x=b^{L-1}
+\]
+implies
+\[
+    \frac{b}{x^5}
+    =
+    b^6b^{-5L},
+    \qquad
+    \frac{1}{b^5x^5}
+    =
+    b^{-5L},
+\]
+and hence
+\[
+    |\varepsilon_{b,L}|
+    \le
+    \frac{b^6+1}{1260\ln b}\,b^{-5L}.
+\]
+\end{proof}
+
+\begin{remark}
+The absence of \(b^{-2L}\) and \(b^{-4L}\) terms in
+\eqref{eq:intro-tail-expansion} reflects the odd inverse powers
+in the Stirling series for \(\ln\Gamma(x)\).
+\end{remark}
+
+
+\subsection{Finite-prefix average}
+\label{subsec:finite-prefix-average-refined}
+
+The preceding theorem sharpens
+\eqref{eq:model-average-leading} immediately.
+
+\begin{corollary}
+\label{cor:finite-prefix-average-refined}
+For every \(b\ge2\) and \(L\ge1\),
+\begin{equation}
+\boxed{
+\begin{aligned}
+    \mathbb E[A_L^{(b)}]
+    &=
+    \frac{b-1}{2}
+    -
+    \frac{c_b}{L}
+    \\
+    &\quad+
+    \frac{b^2-1}{12\ln b}
+    \frac{b^{-L}}{L}
+    -
+    \frac{b^4-1}{360\ln b}
+    \frac{b^{-3L}}{L}
+    +
+    \frac{\varepsilon_{b,L}}{L},
+\end{aligned}
+}
+\label{eq:finite-prefix-average-refined}
+\end{equation}
+where
+\[
+    |\varepsilon_{b,L}|
+    \le
+    \frac{b^6+1}{1260\ln b}\,b^{-5L}.
+\]
+\end{corollary}
+
+\begin{proof}
+From
+\eqref{eq:model-average-exact},
+\[
+    \mathbb E[A_L^{(b)}]
+    =
+    \frac{b-1}{2}
+    -
+    \frac{c_{b,L}}{L}.
+\]
+Write
+\[
+    c_{b,L}
+    =
+    c_b-(c_b-c_{b,L})
+\]
+and apply
+Theorem~\ref{thm:intro-tail}.
+\end{proof}
+
+The expansion
+\eqref{eq:finite-prefix-average-refined}
+shows that the \(L^{-1}\) correction determined by \(c_b\) is separated
+from exponentially small finite-prefix effects.  This distinction will
+be useful in the deterministic setting: the next section asks whether
+the same \(O(1)\) cumulative correction survives when the logarithmic
+mantissa integral is replaced by an orbit average along
+\(\{n\log_b a\}\).
+
+% ============================================================
+% Section 5
+% ============================================================
+
+\section{Deterministic exponential sequences and discrepancy transfer}
+\label{sec:deterministic-transfer}
+
+We now pass from the logarithmic mantissa probability model to actual
+deterministic exponential sequences.
+
+Let \(a,b\ge2\) be integers and assume that they are multiplicatively
+independent.  Equivalently,
+\[
+    \alpha=\log_b a
+\]
+is irrational.  Define
+\begin{equation}
+    \theta_n=\{n\alpha\},
+    \qquad n\ge1.
+    \label{eq:theta-n-deterministic}
+\end{equation}
+For \(\theta\in[0,1)\), we write
+\(D_j^{(b)}(b^\theta)\) for the \(j\)-th significant
+base-\(b\) digit of \(b^\theta\).
+Writing
+\[
+    n\alpha=\lfloor n\alpha\rfloor+\theta_n,
+\]
+we have
+\begin{equation}
+    a^n
+    =
+    b^{\lfloor n\alpha\rfloor}
+    b^{\theta_n}.
+    \label{eq:power-mantissa-decomposition}
+\end{equation}
+Thus the significant digits of \(a^n\) are determined by the orbit
+\((\theta_n)\).
+
+The number of base-\(b\) digits of \(a^n\) is
+\begin{equation}
+    L_n
+    =
+    \lfloor n\alpha\rfloor+1.
+    \label{eq:L-n-deterministic}
+\end{equation}
+
+Throughout this section, \(D_N(\alpha)\) denotes the ordinary interval
+discrepancy of the first \(N\) points of the rotation:
+\begin{equation}
+\boxed{
+    D_N(\alpha)
+    =
+    \sup_{0\le u<v\le1}
+    \left|
+        \frac1N
+        \#\{1\le n\le N:\theta_n\in[u,v)\}
+        -(v-u)
+    \right|.
+}
+\label{eq:ordinary-discrepancy}
+\end{equation}
+We use ordinary discrepancy rather than star discrepancy because the
+digit events below are naturally unions of arbitrary half-open
+subintervals of \([0,1)\).
+
+
+\subsection{Significant-digit cylinders}
+\label{subsec:digit-cylinders}
+
+We first describe the interval geometry of a fixed significant-digit
+position.
+
+For \(j\ge2\), put
+\[
+    M=b^{j-2}.
+\]
+Fix
+\[
+    r\in\{0,\ldots,b-1\}.
+\]
+The condition that the \(j\)-th significant digit of \(b^\theta\) is
+\(r\) is equivalent to the \(j\)-digit integer prefix having the form
+\[
+    bq+r,
+    \qquad
+    M\le q\le bM-1.
+\]
+For each such \(q\), define
+\begin{equation}
+    I_{q,r}^{(j)}
+    =
+    \left[
+        \log_b
+        \left(
+            \frac{bq+r}{b^{j-1}}
+        \right),
+        \log_b
+        \left(
+            \frac{bq+r+1}{b^{j-1}}
+        \right)
+    \right).
+    \label{eq:digit-cylinder}
+\end{equation}
+
+\begin{lemma}[Digit-cylinder decomposition]
+\label{lem:digit-cylinder-decomposition}
+For \(j\ge2\) and
+\(r\in\{0,\ldots,b-1\}\), the event
+\[
+    D_j^{(b)}(b^\theta)=r
+\]
+is the disjoint union
+\begin{equation}
+    \bigcup_{q=b^{j-2}}^{b^{j-1}-1}
+    I_{q,r}^{(j)}.
+    \label{eq:digit-cylinder-union}
+\end{equation}
+In particular, it consists of exactly
+\begin{equation}
+\boxed{
+    K_j=(b-1)b^{j-2}
+}
+\label{eq:K-j}
+\end{equation}
+half-open intervals.
+\end{lemma}
+
+\begin{proof}
+The first \(j\) significant base-\(b\) digits of \(b^\theta\) form
+the integer
+\[
+    \left\lfloor b^{j-1+\theta}\right\rfloor.
+\]
+Its final digit is \(r\) if and only if it equals \(bq+r\) for some
+\[
+    b^{j-2}\le q\le b^{j-1}-1.
+\]
+For a fixed \(q\),
+\[
+    \left\lfloor b^{j-1+\theta}\right\rfloor=bq+r
+\]
+is equivalent to
+\[
+    bq+r
+    \le
+    b^{j-1+\theta}
+    <
+    bq+r+1,
+\]
+which is exactly
+\[
+    \theta\in I_{q,r}^{(j)}.
+\]
+Distinct prefix integers give disjoint half-open intervals.  The
+number of admissible \(q\) is
+\[
+    b^{j-1}-b^{j-2}
+    =
+    (b-1)b^{j-2}.
+\]
+\end{proof}
+
+The total length of the union in
+\eqref{eq:digit-cylinder-union} is
+\[
+    \mathbb P(D_j^{(b)}=r),
+\]
+the logarithmic-mantissa probability from
+Section~\ref{subsec:higher-digit-laws}.
+
+For the leading digit, the corresponding cylinders are simply
+\begin{equation}
+    I_d^{(1)}
+    =
+    [\log_b d,\log_b(d+1)),
+    \qquad
+    d=1,\ldots,b-1.
+    \label{eq:first-digit-cylinder}
+\end{equation}
+
+
+\subsection{Fixed-position discrepancy transfer}
+\label{subsec:fixed-position-transfer}
+
+Lemma~\ref{lem:digit-cylinder-decomposition} gives an immediate
+quantitative comparison between the deterministic orbit and the
+logarithmic mantissa model.
+
+\begin{proposition}[Fixed-position transfer]
+\label{prop:fixed-position-transfer}
+For \(j\ge2\) and
+\(r\in\{0,\ldots,b-1\}\),
+\begin{equation}
+\boxed{
+\left|
+    \frac1N
+    \#\{1\le n\le N:
+        D_j^{(b)}(b^{\theta_n})=r\}
+    -
+    \mathbb P(D_j^{(b)}=r)
+\right|
+\le
+    (b-1)b^{j-2}D_N(\alpha).
+}
+\label{eq:fixed-position-transfer}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The digit event is the disjoint union of
+\(K_j=(b-1)b^{j-2}\) intervals from
+Lemma~\ref{lem:digit-cylinder-decomposition}.
+For each interval \(I\), the definition of ordinary discrepancy gives
+\[
+    \left|
+        \frac1N
+        \#\{1\le n\le N:\theta_n\in I\}
+        -
+        |I|
+    \right|
+    \le
+    D_N(\alpha).
+\]
+Summing over the \(K_j\) disjoint components gives
+\eqref{eq:fixed-position-transfer}.
+\end{proof}
+
+To translate this into a statement about the actual integer \(a^n\),
+we must account for the finitely many early exponents for which the
+\(j\)-th significant digit does not yet exist.
+
+Define
+\begin{equation}
+    e_j(N)
+    =
+    \#\{1\le n\le N:L_n<j\}.
+    \label{eq:e-j-definition}
+\end{equation}
+From
+\[
+    L_n<j
+    \iff
+    n\alpha<j-1,
+\]
+one has the exact formula
+\begin{equation}
+    e_j(N)
+    =
+    \min
+    \left\{
+        N,\,
+        \max
+        \left(
+            0,\,
+            \left\lceil
+                \frac{j-1}{\alpha}
+            \right\rceil-1
+        \right)
+    \right\}.
+    \label{eq:e-j-exact}
+\end{equation}
+In particular,
+\begin{equation}
+    e_j(N)=O_{a,b}(j).
+    \label{eq:e-j-big-O}
+\end{equation}
+
+\begin{corollary}
+\label{cor:actual-fixed-position-transfer}
+For \(j\ge2\),
+\begin{equation}
+\begin{aligned}
+&\left|
+    \frac1N
+    \#\{
+        1\le n\le N:
+        L_n\ge j,\,
+        D_j^{(b)}(a^n)=r
+    \}
+    -
+    \mathbb P(D_j^{(b)}=r)
+\right|
+\\
+&\hspace{35mm}
+\le
+    (b-1)b^{j-2}D_N(\alpha)
+    +
+    \frac{e_j(N)}{N}.
+\end{aligned}
+\label{eq:actual-fixed-position-transfer}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Whenever \(L_n\ge j\), the first \(j\) significant digits of
+\(a^n\) are the first \(j\) significant digits determined by
+\(b^{\theta_n}\).  Starting from
+Proposition~\ref{prop:fixed-position-transfer}, deleting the
+\(e_j(N)\) short powers changes the normalized count by at most
+\(e_j(N)/N\).
+\end{proof}
+
+Combining
+Corollary~\ref{cor:actual-fixed-position-transfer} with
+Proposition~\ref{prop:deep-position-expansion} gives, for fixed \(b\),
+\begin{equation}
+\begin{aligned}
+    &\frac1N
+    \#\{
+        1\le n\le N:
+        L_n\ge j,\,
+        D_j^{(b)}(a^n)=r
+    \}
+    \\
+    &\qquad=
+    \frac1b
+    +
+    \frac{(b-1)(b-1-2r)}
+         {2b\ln b}\,b^{-j}
+    +
+O_b\!\left(
+    b^{-2j}
+    +
+    b^jD_N(\alpha)
+\right)
++
+O_{a,b}\!\left(\frac{j}{N}\right).
+    \label{eq:fixed-position-combined}
+\end{aligned}
+\end{equation}
+This estimate is useful for orientation, but the main result below
+will sum the first \(J\) positions simultaneously.
+
+
+\subsection{The leading-window observable}
+\label{subsec:leading-window-observable}
+
+For \(J\ge1\), define
+\begin{equation}
+    G_J(\theta)
+    =
+    s_b
+    \left(
+        \left\lfloor
+            b^{J-1+\theta}
+        \right\rfloor
+    \right),
+    \qquad
+    0\le\theta<1.
+    \label{eq:G-J-definition}
+\end{equation}
+This is the sum of the first \(J\) significant digits of \(b^\theta\).
+
+\begin{lemma}[Exact leading-window coding]
+\label{lem:leading-window-coding}
+If \(L_n\ge J\), then
+\begin{equation}
+\boxed{
+    G_J(\theta_n)
+    =
+    \sum_{j=1}^{J}
+    D_j^{(b)}(a^n).
+}
+\label{eq:leading-window-coding}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+From
+\eqref{eq:power-mantissa-decomposition},
+\[
+    a^n
+    =
+    b^{L_n-1}b^{\theta_n}.
+\]
+Multiplying the normalized significand \(b^{\theta_n}\) by
+\(b^{J-1}\) and taking the integer part extracts exactly the first
+\(J\) significant digits, provided those digits exist.  Thus
+\[
+    \left\lfloor
+        b^{J-1+\theta_n}
+    \right\rfloor
+\]
+is the \(J\)-digit integer prefix of \(a^n\), and its digit sum is
+the right-hand side of
+\eqref{eq:leading-window-coding}.
+\end{proof}
+
+The logarithmic-mantissa average of \(G_J\) is already known exactly
+from Section~\ref{sec:finite-bias}.
+
+\begin{lemma}[Integral of the leading-window observable]
+\label{lem:G-J-integral}
+For every \(J\ge1\),
+\begin{equation}
+\boxed{
+    \int_0^1 G_J(\theta)\,d\theta
+    =
+    J\frac{b-1}{2}
+    -
+    c_{b,J}.
+}
+\label{eq:G-J-integral}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The random integer
+\[
+    \left\lfloor b^{J-1+\Theta}\right\rfloor
+\]
+is precisely \(M_J\) from
+Section~\ref{subsec:finite-significands}.  Hence
+\[
+    \int_0^1 G_J(\theta)\,d\theta
+    =
+    \mathbb E[s_b(M_J)].
+\]
+By the definition of \(c_{b,J}\),
+\[
+    \mathbb E[s_b(M_J)]
+    =
+    J\frac{b-1}{2}-c_{b,J}.
+\]
+\end{proof}
+
+
+\subsection{A finite discrepancy bound for a leading window}
+\label{subsec:finite-leading-window-bound}
+
+Define the deterministic leading-window average
+\begin{equation}
+    \mathcal S_{N,J}(a;b)
+    =
+    \frac1N
+    \sum_{\substack{1\le n\le N\\L_n\ge J}}
+    \sum_{j=1}^{J}
+    D_j^{(b)}(a^n).
+    \label{eq:S-NJ-main}
+\end{equation}
+
+Before deleting the short powers, consider
+\[
+    T_{N,J}
+    =
+    \frac1N
+    \sum_{n=1}^{N}G_J(\theta_n).
+\]
+Since
+\[
+    G_J(\theta)
+    =
+    \sum_{j=1}^{J}D_j^{(b)}(b^\theta),
+\]
+we may estimate each digit position by its interval cylinders.
+
+For the first digit,
+\eqref{eq:first-digit-cylinder} and ordinary discrepancy give
+\begin{equation}
+\begin{aligned}
+    \left|
+        \frac1N\sum_{n=1}^{N}
+        D_1^{(b)}(b^{\theta_n})
+        -
+        \mathbb E[D_1^{(b)}]
+    \right|
+    &\le
+    \sum_{d=1}^{b-1}d\,D_N(\alpha)
+    \\
+    &=
+    \frac{b(b-1)}{2}D_N(\alpha).
+\end{aligned}
+\label{eq:first-digit-weighted-discrepancy}
+\end{equation}
+
+For \(j\ge2\), there are
+\[
+    K_j=(b-1)b^{j-2}
+\]
+components for each digit \(r\).  Hence
+\begin{align}
+    &\left|
+        \frac1N\sum_{n=1}^{N}
+        D_j^{(b)}(b^{\theta_n})
+        -
+        \mathbb E[D_j^{(b)}]
+    \right|
+    \notag\\
+    &\qquad\le
+    K_jD_N(\alpha)
+    \sum_{r=0}^{b-1}r
+    \notag\\
+    &\qquad=
+    \frac{b(b-1)}{2}
+    (b-1)b^{j-2}
+    D_N(\alpha).
+    \label{eq:higher-digit-weighted-discrepancy}
+\end{align}
+
+Summing
+\eqref{eq:first-digit-weighted-discrepancy}
+and
+\eqref{eq:higher-digit-weighted-discrepancy}
+over \(1\le j\le J\), the geometric series collapses:
+\begin{align}
+    &\frac{b(b-1)}2
+    +
+    \sum_{j=2}^{J}
+    \frac{b(b-1)}2
+    (b-1)b^{j-2}
+    \notag\\
+    &\qquad=
+    \frac{b(b-1)}2
+    \left(
+        1+
+        (b-1)\sum_{j=2}^{J}b^{j-2}
+    \right)
+    \notag\\
+    &\qquad=
+    \frac{b-1}{2}b^J.
+    \label{eq:weighted-component-total}
+\end{align}
+Therefore
+\begin{equation}
+    \left|
+        T_{N,J}
+        -
+        \int_0^1G_J(\theta)\,d\theta
+    \right|
+    \le
+    \frac{b-1}{2}
+    b^J D_N(\alpha).
+    \label{eq:T-NJ-discrepancy}
+\end{equation}
+
+We can now prove the finite deterministic transfer theorem announced
+in the introduction.
+
+\begin{proof}[Proof of
+Theorem~\ref{thm:intro-deterministic-finite}]
+By
+Lemma~\ref{lem:leading-window-coding},
+\[
+    \mathcal S_{N,J}(a;b)
+\]
+agrees with \(T_{N,J}\) on every exponent satisfying \(L_n\ge J\).
+The two quantities differ only at the
+\[
+    e_J(N)
+\]
+short powers.
+
+Since
+\[
+    0\le G_J(\theta)\le J(b-1),
+\]
+we have
+\begin{equation}
+    \left|
+        \mathcal S_{N,J}(a;b)-T_{N,J}
+    \right|
+    \le
+    \frac{(b-1)J\,e_J(N)}{N}.
+    \label{eq:short-power-cost}
+\end{equation}
+Combining
+\eqref{eq:T-NJ-discrepancy},
+\eqref{eq:short-power-cost}, and
+Lemma~\ref{lem:G-J-integral} gives
+\[
+\boxed{
+\begin{aligned}
+    \left|
+        \mathcal S_{N,J}(a;b)
+        -
+        \left(
+            J\frac{b-1}{2}-c_{b,J}
+        \right)
+    \right|
+    \le{}&
+    \frac{b-1}{2}
+    b^JD_N(\alpha)
+    \\
+    &+
+    \frac{(b-1)J\,e_J(N)}{N}.
+\end{aligned}
+}
+\]
+\end{proof}
+
+
+\subsection{The second-order deterministic term}
+\label{subsec:second-order-deterministic}
+
+The finite bound immediately isolates the cumulative Benford bias as
+the bounded correction term.
+
+\begin{proof}[Proof of
+Theorem~\ref{thm:intro-second-order}]
+From
+Theorem~\ref{thm:intro-deterministic-finite},
+\[
+\begin{aligned}
+    \mathcal S_{N,J}(a;b)
+    =
+    J\frac{b-1}{2}
+    -
+    c_{b,J}
+    +
+    O_b\!\left(b^JD_N(\alpha)\right)
+    +
+    O_{a,b}\!\left(\frac{J^2}{N}\right),
+\end{aligned}
+\label{eq:pre-D6}
+\]
+where we used
+\[
+    e_J(N)=O_{a,b}(J).
+\]
+
+By
+Theorem~\ref{thm:intro-tail},
+\[
+    c_{b,J}
+    =
+    c_b+O_b(b^{-J}).
+\]
+Consequently,
+\begin{equation}
+\boxed{
+\begin{aligned}
+    \mathcal S_{N,J}(a;b)
+    =
+    J\frac{b-1}{2}
+    -
+    c_b
+    &+
+    O_b(b^{-J})
+    \\
+    &+
+    O_b\!\left(b^JD_N(\alpha)\right)
+    +
+    O_{a,b}\!\left(\frac{J^2}{N}\right).
+\end{aligned}
+}
+\label{eq:D6-main}
+\end{equation}
+
+If
+\[
+    J=J(N)\longrightarrow\infty,
+\]
+\[
+    b^{J(N)}D_N(\alpha)\longrightarrow0,
+\]
+and
+\[
+    \frac{J(N)^2}{N}\longrightarrow0,
+\]
+then every error term in
+\eqref{eq:D6-main} tends to zero.  Hence
+\[
+\boxed{
+    \mathcal S_{N,J(N)}(a;b)
+    =
+    J(N)\frac{b-1}{2}
+    -
+    c_b
+    +
+    o(1).
+}
+\]
+\end{proof}
+
+Equivalently,
+\begin{equation}
+\boxed{
+    J(N)\frac{b-1}{2}
+    -
+    \mathcal S_{N,J(N)}(a;b)
+    \longrightarrow
+    c_b.
+}
+\label{eq:cb-deterministic-limit}
+\end{equation}
+Thus the same constant obtained by integrating against the logarithmic
+mantissa measure survives as the bounded correction in a deterministic
+orbit average.
+
+
+\subsection{A power-saving discrepancy input}
+\label{subsec:power-saving-discrepancy}
+
+The preceding theorem is formulated conditionally in terms of
+\(D_N(\alpha)\).  For a fixed multiplicatively independent pair
+\((a,b)\), classical Diophantine-discrepancy theory supplies the
+required quantitative input.
+
+Fuchs, building on a result of Kiss and Tichy and Baker's theory of
+linear forms in logarithms, records the following power-saving
+discrepancy estimate for irrational quotients of logarithms
+\cite[Lemma~2]{Fuchs2002}.
+
+\begin{proposition}[Classical power-saving discrepancy]
+\label{prop:power-saving-discrepancy}
+Let \(a,b\ge2\) be fixed multiplicatively independent integers.  Then
+there exists a constant
+\[
+    \gamma_{a,b}>0
+\]
+such that
+\begin{equation}
+\boxed{
+    D_N(\log_b a)
+    \ll_{a,b}
+    N^{-\gamma_{a,b}}.
+}
+\label{eq:power-saving-discrepancy}
+\end{equation}
+\end{proposition}
+
+\begin{remark}[External input]
+\label{rem:discrepancy-external-input}
+Proposition~\ref{prop:power-saving-discrepancy} is not a result of this
+paper.  Fuchs states the estimate for
+\[
+    \alpha=\log_A Q
+\]
+and the sequence \(-n\alpha\), as a special case of a more general
+result of Kiss and Tichy, and notes that the proof follows from the
+Erd\H{o}s--Tur\'an inequality together with Baker's theorem on linear
+forms in logarithms
+\cite{Fuchs2002,KissTichy1989I,KissTichy1989II}.
+Taking
+\[
+    A=b,
+    \qquad
+    Q=a
+\]
+gives \(\alpha=\log_b a\).
+The sign is immaterial for ordinary discrepancy, since reflection
+modulo one maps intervals to intervals of the same length.
+\end{remark}
+
+
+\subsection{Logarithmically growing leading windows}
+\label{subsec:logarithmic-leading-windows}
+
+We can now remove the discrepancy hypothesis from the main
+second-order statement for each fixed pair \((a,b)\).
+
+\begin{proof}[Proof of
+Corollary~\ref{cor:intro-log-window}]
+Fix
+\[
+    0<\kappa<\gamma_{a,b}
+\]
+and define
+\[
+    J_N
+    =
+    \left\lfloor
+        \kappa\log_bN
+    \right\rfloor.
+\]
+Then
+\[
+    J_N\longrightarrow\infty
+\]
+and
+\[
+    \frac{J_N^2}{N}
+    =
+    O\!\left(
+        \frac{(\log N)^2}{N}
+    \right)
+    \longrightarrow0.
+\]
+Moreover,
+\[
+    b^{J_N}
+    \le
+    N^\kappa.
+\]
+Using
+Proposition~\ref{prop:power-saving-discrepancy},
+\[
+    b^{J_N}D_N(\log_ba)
+    \ll_{a,b}
+    N^{\kappa-\gamma_{a,b}}
+    \longrightarrow0.
+\]
+The hypotheses of
+Theorem~\ref{thm:intro-second-order}
+are therefore satisfied, and
+\[
+\boxed{
+    \mathcal S_{N,J_N}(a;b)
+    =
+    J_N\frac{b-1}{2}
+    -
+    c_b
+    +
+    o(1).
+}
+\]
+\end{proof}
+
+The proof also gives an explicit qualitative rate.
+
+\begin{corollary}[Quantitative logarithmic-window form]
+\label{cor:quantitative-log-window}
+Under the hypotheses above,
+\begin{equation}
+\begin{aligned}
+    \mathcal S_{N,J_N}(a;b)
+    =
+    J_N\frac{b-1}{2}
+    -
+    c_b
+    +
+    O_{a,b,\kappa}
+    \left(
+        N^{-\kappa}
+        +
+        N^{-(\gamma_{a,b}-\kappa)}
+        +
+        \frac{(\log N)^2}{N}
+    \right).
+    \label{eq:quantitative-log-window}
+\end{aligned}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Since
+\[
+    J_N
+    \ge
+    \kappa\log_bN-1,
+\]
+we have
+\[
+    b^{-J_N}
+    \ll_b N^{-\kappa}.
+\]
+The other two terms follow directly from
+\eqref{eq:D6-main} and
+\eqref{eq:power-saving-discrepancy}.
+\end{proof}
+
+For example, choosing
+\[
+    \kappa=\frac{\gamma_{a,b}}2
+\]
+balances the first two power-saving errors and yields
+\begin{equation}
+    \mathcal S_{N,J_N}(a;b)
+    =
+    J_N\frac{b-1}{2}
+    -
+    c_b
+    +
+    O_{a,b}
+    \left(
+        N^{-\gamma_{a,b}/2}
+        +
+        \frac{(\log N)^2}{N}
+    \right),
+    \label{eq:balanced-log-window}
+\end{equation}
+with
+\[
+    J_N
+    =
+    \left\lfloor
+        \frac{\gamma_{a,b}}2
+        \log_bN
+    \right\rfloor.
+\]
+
+
+\subsection{Relation to earlier growing-window results}
+\label{subsec:fuchs-comparison}
+
+The logarithmic growth of the controlled window is not itself new.
+Fuchs studied digital blocks in growing regions of exponential
+sequences and used discrepancy and exponential-sum estimates to obtain
+first-order asymptotic digit statistics
+\cite{Fuchs2002}.
+The discrepancy machinery in
+Proposition~\ref{prop:power-saving-discrepancy}
+likewise belongs to that earlier literature.
+
+The point of
+\eqref{eq:cb-deterministic-limit}
+is instead second-order.
+The first-order term
+\[
+    J\frac{b-1}{2}
+\]
+reflects the asymptotically uniform bulk digit distribution.
+After this term is removed, the remaining bounded contribution is not
+discarded inside an \(O(1)\) error: it converges to
+\[
+    -c_b.
+\]
+Thus
+\[
+    c_b
+    =
+    \frac b2
+    -
+    \frac{b-1}{2}\log_b(2\pi)
+\]
+acts as a boundary correction generated by the finitely biased
+significant positions near the leading edge.
+
+To the best of our knowledge, this explicit constant term has not
+previously been recorded in the growing-window theory for exponential
+sequences.
+
+
+\subsection{Scope of the deterministic result}
+\label{subsec:deterministic-scope}
+
+It is important to distinguish the leading-window theorem from a
+statement about the complete base-\(b\) digit sum of \(a^n\).
+
+For \(n\) of order \(N\),
+\[
+    L_n
+    =
+    n\log_ba+O(1)
+    \asymp_{a,b}N,
+\]
+whereas the unconditional window obtained above has only
+\[
+    J_N=O_{a,b}(\log N)
+\]
+positions.
+Hence
+\[
+    \frac{J_N}{L_n}\longrightarrow0
+\]
+for typical \(n\) in the averaging range.
+
+Accordingly, the present argument controls a vanishing fraction of the
+complete digit expansion.  It does not establish a mean law, variance
+law, central limit theorem, mixing property, or independence statement
+for the full digit sum \(s_b(a^n)\).  Extending absolute-error control
+from a logarithmic leading window to a positive proportion of the
+digits would require substantially stronger input than the discrepancy
+estimate used here.
+
+% ============================================================
+% Section 6
+% ============================================================
+
+\section{Computational verification and reproducibility}
+\label{sec:verification}
+
+The results of Sections~\ref{sec:finite-bias}--\ref{sec:deterministic-transfer}
+are proved analytically and do not depend on numerical computation.
+Nevertheless, because several analytic identities involve substantial
+cancellation and the deterministic estimates require delicate
+indexing, boundary handling, and discrepancy bookkeeping, we carried
+out a separate adversarial computational audit of the full theorem
+package.
+
+The purpose of this audit was not to supply numerical evidence in place
+of proof.  Rather, it was designed to detect indexing errors,
+normalization mistakes, hidden boundary cases, numerical instability,
+or disagreements between mathematically equivalent formulations.
+
+\subsection{Audit structure}
+\label{subsec:audit-structure}
+
+The verification package treats the principal statements as sixteen
+separate claims, denoted internally by
+\[
+    \mathrm{A1},\ldots,\mathrm{A10},
+    \qquad
+    \mathrm{D1},\ldots,\mathrm{D6}.
+\]
+The analytic claims include the exact significant-digit formulas, the
+finite Benford-weighted digit-sum identity, the closed expression for
+\(c_b\), the deep-position expansions, and the finite-length Stirling
+remainder estimate.  The deterministic claims include the digit-cylinder
+decomposition, leading-window coding, and the finite discrepancy
+transfer estimates.
+
+Where possible, the same mathematical quantity was recomputed through
+independent representations.  In particular, the audit compared:
+
+\begin{itemize}
+    \item direct logarithmic interval sums with Gamma-function formulas;
+
+    \item position-wise digit expectations with direct enumeration of
+    finite integer significands;
+
+    \item the finite cumulative bias obtained from individual digits
+    with the factorial identity of
+    Theorem~\ref{thm:intro-finite-digit-sum};
+
+    \item mantissa-based digit extraction with exact integer base-\(b\)
+    digit extraction for powers \(a^n\);
+
+    \item the theoretical discrepancy bounds with explicit orbit
+    counts for finite test cases.
+\end{itemize}
+
+All comparisons involving Gamma functions or deep Stirling tails were
+performed at arbitrary precision rather than ordinary machine
+floating-point precision.
+
+
+\subsection{Verification results}
+\label{subsec:verification-results}
+
+No candidate identity in the final theorem package was falsified.
+All sixteen claims passed the final audit.
+
+For the analytic part, the finite prefix probabilities, Gamma
+identities, factorial identity, and closed formula for \(c_b\) agreed
+across independent computational routes to high precision.  The
+deep-position coefficients in
+Proposition~\ref{prop:deep-position-expansion} and
+Corollary~\ref{cor:mean-digit-expansion} were also checked by scaled
+residual experiments across several bases.
+
+The finite-tail theorem
+Theorem~\ref{thm:intro-tail} received a separate
+high-precision stress test.  Because the relevant expression involves
+subtraction of large log-Gamma terms, low working precision can produce
+spurious violations of the remainder estimate.  The final experiments
+therefore used 220 decimal digits of precision.  The numerical tests
+were consistent with the rigorous bound
+\[
+    |\varepsilon_{b,L}|
+    \le
+    \frac{b^6+1}{1260\ln b}\,b^{-5L}.
+\]
+These experiments are supplementary only: the proof of the bound is
+the analytic positive-real Stirling remainder argument in
+Section~\ref{subsec:cumulative-tail-expansion}.
+
+For the deterministic part, exact integer digit extraction was compared
+against the mantissa representation for thousands of powers and their
+tested leading positions, with no disagreement after explicit guarding
+of exact and near-exact integer boundaries.  The coefficient
+\[
+    \frac{b-1}{2}b^J
+\]
+in the finite leading-window discrepancy bound was also independently
+reconstructed from the weighted interval-component counts and tested
+against direct finite orbit computations.
+
+The final automated test suite contained sixteen tests, all of which
+passed.
+
+
+\subsection{Numerical boundary issues}
+\label{subsec:numerical-boundaries}
+
+Two numerical issues encountered during the audit are worth recording.
+
+First, evaluating
+\[
+    \left\lfloor b^{J-1+\theta}\right\rfloor
+\]
+directly with finite-precision floating-point arithmetic can be
+unreliable when the exact value is an integer or lies extremely close
+to one.  Exact integer arithmetic was therefore treated as the ground
+truth for digit extraction, and high-precision nearest-integer checks
+were used at mantissa boundaries.
+
+Second, direct evaluation of the finite-bias formula
+\[
+    \ln\Gamma(b^L)-b\ln\Gamma(b^{L-1})
+\]
+can suffer severe cancellation for large \(L\).  High-precision
+arithmetic was used in all tests involving the exponentially small
+tail \(c_b-c_{b,L}\).
+
+These observations concern implementation only and do not alter the
+analytic statements proved above.
+
+
+\subsection{Reproducibility archive}
+\label{subsec:reproducibility-archive}
+
+The computational audit is organized as a separate reproducibility
+repository containing:
+
+\begin{itemize}
+    \item an authoritative theorem specification matching the claims
+    proved in the manuscript;
+
+    \item independent implementations of the principal formulas;
+
+    \item automated unit and adversarial tests;
+
+    \item high-precision residual experiments for the asymptotic
+    statements;
+
+    \item deterministic digit-extraction and discrepancy experiments;
+
+    \item machine-readable claim-status and numerical-residual tables;
+
+    \item instructions sufficient to recreate the final verification
+    run.
+\end{itemize}
+
+The verification code is intentionally separated from the proofs in
+this paper.  Its role is to make the formulas independently checkable
+and to document numerical edge cases, while the mathematical validity
+of the main theorems rests entirely on the arguments in
+Sections~\ref{sec:finite-bias}--\ref{sec:deterministic-transfer}.
+
+% TODO before public submission:
+% Insert the permanent GitHub/Zenodo archival citation here once the
+% verification repository has been finalized and deposited.
+
+% ============================================================
+% Section 7
+% ============================================================
+
+\section{Discussion, limitations, and open problems}
+\label{sec:discussion}
+
+The results of this paper identify a precise second-order contribution
+to the mean sum of a growing block of leading significant digits in an
+exponential sequence.  The main mechanism can be summarized as follows:
+the early significant positions are not individually uniform under the
+logarithmic mantissa measure, their cumulative signed deviation has the
+finite limit
+\[
+    c_b
+    =
+    \frac b2
+    -
+    \frac{b-1}{2}\log_b(2\pi),
+\]
+and quantitative equidistribution transfers this same bounded correction
+to a deterministic leading-window average.
+
+This section records the limits of that argument and several natural
+directions in which the present results might be extended.
+
+
+\subsection{Leading windows versus complete digit sums}
+\label{subsec:leading-vs-complete}
+
+The principal deterministic result concerns
+\[
+    \mathcal S_{N,J}(a;b)
+    =
+    \frac1N
+    \sum_{\substack{1\le n\le N\\L_n\ge J}}
+    \sum_{j=1}^{J}D_j^{(b)}(a^n),
+\]
+with
+\[
+    J=J(N)
+\]
+chosen so that
+\[
+    b^J D_N(\log_b a)\longrightarrow0.
+\]
+For the unconditional fixed-pair corollary obtained from a power-saving
+discrepancy estimate, this gives
+\[
+    J_N=O_{a,b}(\log N).
+\]
+
+By contrast, for \(n\asymp N\), the complete number of base-\(b\)
+digits of \(a^n\) is
+\[
+    L_n
+    =
+    n\log_b a+O(1)
+    \asymp_{a,b}N.
+\]
+Hence the controlled leading block satisfies
+\[
+    \frac{J_N}{L_n}\longrightarrow0.
+\]
+
+The theorem therefore does not determine the asymptotic behavior of
+the complete sum of digits
+\[
+    s_b(a^n)
+    =
+    \sum_{j=1}^{L_n}D_j^{(b)}(a^n),
+\]
+nor of the normalized complete-digit average
+\[
+    \frac{s_b(a^n)}{L_n}.
+\]
+Controlling a logarithmic number of significant positions is sufficient
+to retain the finite boundary constant \(c_b\), but it controls only a
+vanishing fraction of the full expansion.
+
+This distinction is essential: the second-order theorem proved here
+should not be interpreted as a complete digit-sum theorem for
+exponential sequences.
+
+
+\subsection{The barrier imposed by discrepancy}
+\label{subsec:discrepancy-barrier}
+
+The finite deterministic estimate
+\[
+    \mathcal S_{N,J}(a;b)
+    =
+    J\frac{b-1}{2}
+    -
+    c_b
+    +
+    O_b(b^{-J})
+    +
+    O_b\!\left(b^JD_N(\log_b a)\right)
+    +
+    O_{a,b}\!\left(\frac{J^2}{N}\right)
+\]
+makes the present limitation explicit.
+
+The complexity of the first \(J\) significant positions grows
+essentially like \(b^J\).  Ordinary discrepancy must therefore decrease
+fast enough to compensate for this exponential growth.  A polynomial
+bound
+\[
+    D_N(\log_b a)\ll N^{-\gamma}
+\]
+naturally leads to a logarithmic admissible range
+\[
+    J\lesssim\gamma\log_bN.
+\]
+
+Thus one obvious open problem is to determine whether stronger
+arithmetic or harmonic analysis can control significantly larger
+leading windows while retaining an absolute \(o(1)\) error after
+subtracting the first-order term.
+
+The difficulty is stronger than proving first-order digit
+equidistribution.  A statement of the form
+\[
+    \mathcal S_{N,J}
+    =
+    J\frac{b-1}{2}
+    +
+    o(J)
+\]
+does not determine a bounded second-order term.  To identify
+\(-c_b\), the total error must instead be controlled on the absolute
+scale \(o(1)\).
+
+
+\subsection{Beyond logarithmic windows}
+\label{subsec:beyond-logarithmic-windows}
+
+A natural first extension would be to replace
+\[
+    J_N\asymp\log N
+\]
+by a faster-growing sequence while preserving
+\[
+    \mathcal S_{N,J_N}(a;b)
+    =
+    J_N\frac{b-1}{2}
+    -
+    c_b
+    +
+    o(1).
+\]
+
+There are at least two conceptually different ways such an improvement
+could arise.  One could seek sharper discrepancy estimates tailored to
+the specific rotation
+\[
+    \{n\log_b a\},
+\]
+or one could exploit more structure in the digit observable itself,
+rather than bounding all of its interval components independently.
+
+The present proof deliberately uses ordinary discrepancy in a robust
+but coarse way.  It does not exploit possible cancellation between the
+many digit cylinders.  Whether such cancellation can enlarge the
+second-order window remains open.
+
+
+\subsection{The complete average-digit problem}
+\label{subsec:complete-average-digit}
+
+A substantially harder problem is to understand
+\begin{equation}
+    A_{a,b}(n)
+    =
+    \frac{s_b(a^n)}{L_n}.
+    \label{eq:complete-average-digit}
+\end{equation}
+The logarithmic mantissa model suggests the uniform digit mean
+\[
+    \frac{b-1}{2}
+\]
+as the natural center, but the present results do not prove
+\[
+    A_{a,b}(n)\to\frac{b-1}{2}
+\]
+pointwise, in mean over \(n\), or in any stronger sense.
+
+The obstacle is structural.  For each \(n\), the statistic
+\eqref{eq:complete-average-digit} depends on a number of digit
+positions that grows linearly with \(n\).  Standard equidistribution of
+\[
+    \{n\log_b a\}
+\]
+controls every fixed observable, while the complete digit average
+corresponds to a family of observables whose complexity increases with
+\(n\).
+
+Bridging this varying-observable gap appears to require ideas beyond
+the fixed-position and logarithmic-window methods used here.
+
+
+\subsection{Fluctuations and dependence}
+\label{subsec:fluctuations-open}
+
+The present paper concerns expectations, cumulative bias, and
+deterministic orbit averages.  It does not establish a variance law or
+a limiting distribution for digit sums of \(a^n\).
+
+In particular, no assumption of independence among significant digits
+is made.  Irrational rotations are equidistributed but are not mixing,
+and fixed-position marginal equidistribution does not imply temporal
+independence, Gaussian fluctuations, or a central limit theorem for a
+changing digit observable.
+
+Natural future questions include whether appropriately normalized
+leading-window or complete-digit statistics possess limiting variance
+laws, whether arithmetic properties of \(a\) and \(b\) influence those
+fluctuations, and whether any probabilistic limit theorem is available
+under additional hypotheses.
+
+These questions are deliberately left separate from the deterministic
+second-order theory proved above.
+
+
+\subsection{Other digital functions}
+\label{subsec:other-digital-functions}
+
+The finite identity in
+Theorem~\ref{thm:intro-finite-digit-sum} arises from two ingredients:
+the logarithmic Benford weight
+\[
+    \log_b\!\left(\frac{m+1}{m}\right)
+\]
+and the radix recursion
+\[
+    s_b(bq+r)=s_b(q)+r.
+\]
+This suggests a broader question.
+
+Let \(f\) be a digital or \(b\)-additive function.  One may ask whether
+finite logarithmically weighted expectations
+\[
+    \sum_{m=b^{L-1}}^{b^L-1}
+    f(m)
+    \log_b\!\left(\frac{m+1}{m}\right)
+\]
+admit exact product, Gamma-function, or asymptotic evaluations analogous
+to those obtained here for \(s_b\).
+
+Such extensions would connect the present Benford-weighted calculation
+more directly with the classical theory of digital and \(q\)-additive
+functions.  We do not pursue them here.
+
+
+\subsection{Summary of the boundary correction}
+\label{subsec:boundary-correction-summary}
+
+The principal phenomenon established in this paper is a summable
+boundary effect.
+
+The significant positions closest to the leading edge retain a
+systematic logarithmic bias. Although the bias at position \(j\)
+decays exponentially with \(j\), the sum of these deviations converges
+to the finite constant
+\[
+    c_b.
+\]
+Consequently, the mean sum of the first \(J\) significant digits is not
+merely
+\[
+    J\frac{b-1}{2}+o(1),
+\]
+but rather
+\[
+    J\frac{b-1}{2}-c_b+o(1)
+\]
+whenever the underlying orbit is sampled with sufficient quantitative
+equidistribution.
+
+This provides a precise sense in which the logarithmic structure of
+the leading digits survives beyond the first-order uniform-digit law.
+The extent to which analogous second-order effects persist deeper into
+the full digital expansion remains open.
+
+% ============================================================
+% Section 8
+% ============================================================
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper studied the cumulative effect of the nonuniform early
+significant digits under the logarithmic, or Benford, mantissa measure.
+Starting from the classical distribution of finite significant
+prefixes, we obtained an exact logarithmically weighted finite
+digit-sum identity and used it to evaluate the cumulative signed
+significant-digit bias in closed form:
+\[
+\boxed{
+    c_b
+    =
+    \frac b2
+    -
+    \frac{b-1}{2}\log_b(2\pi).
+}
+\]
+The same finite identity also yields explicit control of the approach
+to this limit through the Stirling expansion and its positive-real
+remainder bound.
+
+The second part of the paper transferred this model-side constant to
+deterministic exponential sequences.  For multiplicatively independent
+integers \(a,b\ge2\), quantitative equidistribution of
+\(\{n\log_b a\}\) allows a logarithmically growing block of leading
+significant digits to be averaged with absolute second-order accuracy.
+For an admissible growing window \(J_N\), this gives
+\[
+\boxed{
+    \mathcal S_{N,J_N}(a;b)
+    =
+    J_N\frac{b-1}{2}
+    -
+    c_b
+    +
+    o(1).
+}
+\]
+Thus the bounded correction predicted by the logarithmic mantissa
+model survives in an actual deterministic orbit.
+
+The first-order ingredients behind this result belong to established
+theory: finite significant-digit laws, higher-digit Gamma
+representations, uniform distribution modulo one, and discrepancy
+methods for exponential sequences all have substantial prior
+literature.  The contribution developed here is instead the finite
+Benford-weighted digit-sum evaluation, its closed cumulative constant,
+and the retention of that same constant as a second-order term in the
+controlled deterministic leading window.
+
+The present method does not address the complete digit expansion of
+\(a^n\), for which the number of digits grows linearly with \(n\),
+nor does it establish variance laws, independence, mixing, or
+probabilistic limit theorems for full digit sums.  Extending
+second-order control beyond logarithmically growing leading windows,
+and understanding whether related boundary corrections occur for more
+general digital functions, remain natural problems for future work.
+
+\section*{Acknowledgments}
+
+The author used AI-assisted tools, including ChatGPT and Gemini Deep
+Research, for literature-search assistance, adversarial review,
+computational-verification support, and editorial refinement.
+AI-generated suggestions were not treated as mathematical evidence,
+and the author takes full responsibility for all mathematical claims,
+proofs, citations, and conclusions in the manuscript.
+
+\bibliographystyle{plain}
+\bibliography{references4}
+
+\end{document}
