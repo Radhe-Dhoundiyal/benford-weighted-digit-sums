@@ -1,6 +1,8 @@
 # Benford-Weighted Digit Sums and Second-Order Asymptotics for Exponential Sequences
 
-Reproducibility repository for the paper by **Radhe Dhoundiyal**, Independent Researcher. This is the local candidate for the initial public release, version **v1.0.0**, dated **2026-09-05**.
+Public reproducibility repository for the paper by **Radhe Dhoundiyal**, Independent Researcher. The current release is **v1.0.0**, dated **2026-09-05**.
+
+Manuscript: [authoritative PDF](manuscript/paper.pdf) · [LaTeX source](manuscript/paper.tex) · [BibTeX references](manuscript/references4.bib)
 
 The repository provides an adversarial verification package for exact and asymptotic formulas concerning significant base-`b` digits under the Benford mantissa measure and their transfer to leading windows of deterministic exponential sequences. It does not claim that computation proves the paper. Analytic proofs live in the manuscript; the software supplies independent exact-integer, interval, Gamma-function, arbitrary-precision, discrepancy, and numerical checks.
 
