@@ -4,6 +4,8 @@ Public reproducibility repository for the paper by **Radhe Dhoundiyal**, Indepen
 
 Manuscript: [authoritative PDF](manuscript/paper.pdf) · [LaTeX source](manuscript/paper.tex) · [BibTeX references](manuscript/references4.bib)
 
+Public preprint: [SSRN DOI 10.2139/ssrn.7492000](https://doi.org/10.2139/ssrn.7492000).
+
 The repository provides an adversarial verification package for exact and asymptotic formulas concerning significant base-`b` digits under the Benford mantissa measure and their transfer to leading windows of deterministic exponential sequences. It does not claim that computation proves the paper. Analytic proofs live in the manuscript; the software supplies independent exact-integer, interval, Gamma-function, arbitrary-precision, discrepancy, and numerical checks.
 
 ## Scope
